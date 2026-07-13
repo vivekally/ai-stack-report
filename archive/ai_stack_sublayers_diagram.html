@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Stack · Sub-Layer Decomposition · May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0a0c10;
+    --surface:  #111318;
+    --surface2: #181b22;
+    --border:   rgba(255,255,255,0.07);
+    --text:     #d4d8e2;
+    --muted:    #6b7285;
+    --accent:   #5ee7c4;
+
+    --l1:  #ff6b6b; /* Silicon */
+    --l2:  #ff9f43; /* Compute */
+    --l3:  #ffd32a; /* Networking */
+    --l4:  #48dbfb; /* Cloud */
+    --l5:  #54a0ff; /* Data */
+    --l6:  #a29bfe; /* Models */
+    --l7:  #fd79a8; /* MLOps */
+    --l8:  #00cec9; /* Inference */
+    --l9:  #6ab04c; /* Orchestration */
+    --l10: #badc58; /* Middleware */
+    --l11: #e056fd; /* App Platforms */
+    --l12: #f9ca24; /* Verticals */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.9rem;
+    line-height: 1.1;
+    color: #fff;
+    font-weight: 400;
+  }
+  h1 em { color: var(--accent); font-style: italic; }
+  .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+  }
+  .meta span { color: var(--text); }
+
+  /* ── MAIN LAYOUT: stack + cross-cutting sidebar ── */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 1.2rem;
+  }
+
+  /* ── STACK ── */
+  .stack { display: flex; flex-direction: column; gap: 6px; }
+
+  .layer {
+    display: grid;
+    grid-template-columns: 56px 180px 1fr;
+    align-items: stretch;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--c);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+  .layer:hover {
+    background: var(--surface2);
+    border-left-width: 5px;
+  }
+
+  .layer-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--c);
+    background: rgba(255,255,255,0.015);
+    border-right: 1px solid var(--border);
+  }
+
+  .layer-label {
+    padding: 10px 12px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .layer-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 2px;
+  }
+  .layer-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c);
+  }
+
+  .sublayers {
+    padding: 10px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .sub {
+    font-size: 11px;
+    padding: 4px 9px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: var(--text);
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+  .sub:hover {
+    background: color-mix(in srgb, var(--c) 18%, transparent);
+    border-color: var(--c);
+    color: #fff;
+  }
+  .sub small {
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    margin-left: 4px;
+    letter-spacing: 0.04em;
+  }
+  .sub:hover small { color: rgba(255,255,255,0.7); }
+
+  /* per-layer color binding */
+  .l1  { --c: var(--l1);  }
+  .l2  { --c: var(--l2);  }
+  .l3  { --c: var(--l3);  }
+  .l4  { --c: var(--l4);  }
+  .l5  { --c: var(--l5);  }
+  .l6  { --c: var(--l6);  }
+  .l7  { --c: var(--l7);  }
+  .l8  { --c: var(--l8);  }
+  .l9  { --c: var(--l9);  }
+  .l10 { --c: var(--l10); }
+  .l11 { --c: var(--l11); }
+  .l12 { --c: var(--l12); }
+
+  /* ── CROSS-CUTTING SIDEBAR ── */
+  .crosscut {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 14px 12px;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    background-image:
+      repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 8px,
+        rgba(94,231,196,0.025) 8px,
+        rgba(94,231,196,0.025) 9px
+      );
+  }
+  .crosscut-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .crosscut-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .crosscut-title em { color: var(--accent); font-style: italic; }
+  .crosscut-cat {
+    margin-bottom: 9px;
+  }
+  .crosscut-cat-name {
+    font-size: 11px;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .crosscut-cat-items {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+  .crosscut-foot {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 9px;
+    color: var(--muted);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ── LEGEND / FOOTER ── */
+  footer {
+    margin-top: 1.2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  footer span { color: var(--text); }
+  .legend {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .legend-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  @media (max-width: 1000px) {
+    .main { grid-template-columns: 1fr; }
+    .layer { grid-template-columns: 44px 140px 1fr; }
+  }
+  @media (max-width: 640px) {
+    body { padding: 1rem; font-size: 12px; }
+    .layer { grid-template-columns: 1fr; }
+    .layer-num, .layer-label { border-right: none; border-bottom: 1px solid var(--border); }
+    .layer-num { padding: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header>
+    <div>
+      <div class="eyebrow">Sub-Layer Decomposition</div>
+      <h1>The <em>AI Stack</em>, Unpacked</h1>
+    </div>
+    <div class="meta">
+      12 layers · <span>~70 sub-layers</span><br>
+      Companion to Landscape Report<br>
+      <span>May 26, 2026</span>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="stack">
+
+      <!-- L1 -->
+      <div class="layer l1">
+        <div class="layer-num">01</div>
+        <div class="layer-label">
+          <div class="layer-name">Silicon</div>
+          <div class="layer-tag">Compute · Memory · Photonics</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Compute accelerators <small>NVIDIA, AMD, TPU, Cerebras</small></span>
+          <span class="sub">HBM / memory <small>SK Hynix, Micron</small></span>
+          <span class="sub">Interconnect silicon <small>Broadcom, Marvell</small></span>
+          <span class="sub">Advanced packaging <small>TSMC CoWoS, Amkor</small></span>
+          <span class="sub">EDA tools <small>Synopsys, Cadence</small></span>
+          <span class="sub">Chip IP <small>Arm, SiFive</small></span>
+        </div>
+      </div>
+
+      <!-- L2 -->
+      <div class="layer l2">
+        <div class="layer-num">02</div>
+        <div class="layer-label">
+          <div class="layer-name">Compute &amp; Data Centers</div>
+          <div class="layer-tag">Power · Cooling · Land</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Hyperscaler DCs <small>AWS, Azure, GCP</small></span>
+          <span class="sub">AI-native neoclouds <small>CoreWeave, Lambda, Crusoe</small></span>
+          <span class="sub">Colocation <small>Equinix, Digital Realty</small></span>
+          <span class="sub">Power infra <small>Constellation, Vistra, SMR</small></span>
+          <span class="sub">Cooling <small>Liquid, immersion, free-air</small></span>
+          <span class="sub">Orbital DCs <small>Starcloud, SpaceX</small></span>
+        </div>
+      </div>
+
+      <!-- L3 -->
+      <div class="layer l3">
+        <div class="layer-num">03</div>
+        <div class="layer-label">
+          <div class="layer-name">Networking</div>
+          <div class="layer-tag">Fabric · Optics · DPU</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Intra-rack <small>NVLink, UALink</small></span>
+          <span class="sub">Intra-DC fabric <small>InfiniBand, Ultra Ethernet</small></span>
+          <span class="sub">Long-haul <small>Dark fiber, wavelengths</small></span>
+          <span class="sub">Optical / CPO <small>Coherent, Lumentum</small></span>
+          <span class="sub">DPU / smart NIC <small>BlueField, Pensando, Nitro</small></span>
+        </div>
+      </div>
+
+      <!-- L4 -->
+      <div class="layer l4">
+        <div class="layer-num">04</div>
+        <div class="layer-label">
+          <div class="layer-name">Cloud Platforms</div>
+          <div class="layer-tag">Hyperscaler · Neocloud · Sovereign</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Hyperscaler AI <small>Bedrock, Foundry, Vertex</small></span>
+          <span class="sub">AI-native GPU clouds <small>CoreWeave, Lambda</small></span>
+          <span class="sub">Sovereign / regional <small>G42, Mistral Compute</small></span>
+          <span class="sub">Bare-metal rental <small>Voltage Park, Vast.ai</small></span>
+          <span class="sub">Managed K8s for AI <small>Run:ai, Anyscale</small></span>
+        </div>
+      </div>
+
+      <!-- L5 -->
+      <div class="layer l5">
+        <div class="layer-num">05</div>
+        <div class="layer-label">
+          <div class="layer-name">Data Infrastructure</div>
+          <div class="layer-tag">Storage · Vector · Synthesis</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Vector DBs <small>Pinecone, Weaviate, Qdrant</small></span>
+          <span class="sub">Lakehouses <small>Databricks, Snowflake</small></span>
+          <span class="sub">Feature stores <small>Tecton</small></span>
+          <span class="sub">Labeling / RLHF data <small>Scale, Surge, Mercor</small></span>
+          <span class="sub">Synthetic data <small>Gretel, Mostly AI</small></span>
+          <span class="sub">ETL / streaming <small>Fivetran, Confluent</small></span>
+          <span class="sub">Governance / lineage <small>Atlan, Collibra</small></span>
+        </div>
+      </div>
+
+      <!-- L6 -->
+      <div class="layer l6">
+        <div class="layer-num">06</div>
+        <div class="layer-label">
+          <div class="layer-name">Model Development</div>
+          <div class="layer-tag">Frontier · Open · Specialized</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Frontier closed <small>Anthropic, OpenAI, GDM</small></span>
+          <span class="sub">Open-weight <small>Llama, Mistral, DeepSeek, Qwen</small></span>
+          <span class="sub">Small / on-device <small>Phi, Gemma</small></span>
+          <span class="sub">Domain-specific <small>Harvey, Bloomberg GPT</small></span>
+          <span class="sub">Multimodal <small>Image, video, audio, 3D</small></span>
+          <span class="sub">Reasoning / agentic</span>
+          <span class="sub">World / robotics models <small>PI, Skild, 1X</small></span>
+        </div>
+      </div>
+
+      <!-- L7 -->
+      <div class="layer l7">
+        <div class="layer-num">07</div>
+        <div class="layer-label">
+          <div class="layer-name">Model Optimization &amp; MLOps</div>
+          <div class="layer-tag">Tune · Eval · Govern</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Fine-tuning <small>Together, Predibase, OpenPipe</small></span>
+          <span class="sub">RLHF / RLAIF tooling</span>
+          <span class="sub">Distillation / quantization <small>TensorRT, llama.cpp</small></span>
+          <span class="sub">Experiment tracking <small>W&amp;B, Comet</small></span>
+          <span class="sub">Eval &amp; observability <small>Braintrust, LangSmith, Arize</small></span>
+          <span class="sub">Model registry <small>MLflow, Vertex Registry</small></span>
+        </div>
+      </div>
+
+      <!-- L8 -->
+      <div class="layer l8">
+        <div class="layer-num">08</div>
+        <div class="layer-label">
+          <div class="layer-name">Inference</div>
+          <div class="layer-tag">Serve · Route · Optimize</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Inference silicon <small>Cerebras, Groq, SambaNova</small></span>
+          <span class="sub">Serving frameworks <small>vLLM, SGLang, TensorRT-LLM</small></span>
+          <span class="sub">Inference-as-a-Service <small>Together, Fireworks, Baseten, Modal</small></span>
+          <span class="sub">Edge / on-device <small>ONNX, ANE, Qualcomm</small></span>
+          <span class="sub">Marketplaces / routers <small>OpenRouter, Martian</small></span>
+          <span class="sub">Speculative decoding</span>
+        </div>
+      </div>
+
+      <!-- L9 -->
+      <div class="layer l9">
+        <div class="layer-num">09</div>
+        <div class="layer-label">
+          <div class="layer-name">Orchestration &amp; Dev Tooling</div>
+          <div class="layer-tag">Agents · Workflows · IDEs</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Agent frameworks <small>LangChain, LlamaIndex, CrewAI</small></span>
+          <span class="sub">Durable workflows <small>Temporal, Inngest, Restate</small></span>
+          <span class="sub">Coding-agent IDEs <small>Cursor, Windsurf, Claude Code</small></span>
+          <span class="sub">Browser / computer use <small>Browserbase, E2B</small></span>
+          <span class="sub">Evals as code <small>Promptfoo, Inspect</small></span>
+          <span class="sub">AI notebooks <small>Hex, Marimo</small></span>
+        </div>
+      </div>
+
+      <!-- L10 -->
+      <div class="layer l10">
+        <div class="layer-num">10</div>
+        <div class="layer-label">
+          <div class="layer-name">Middleware &amp; APIs</div>
+          <div class="layer-tag">Gateway · MCP · Guardrails</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Model gateways / routers <small>Portkey, Kong, Cloudflare</small></span>
+          <span class="sub">MCP servers / connectors</span>
+          <span class="sub">Agent identity / auth <small>Arcade, Anon</small></span>
+          <span class="sub">Rate limit / cost <small>Helicone, Langfuse</small></span>
+          <span class="sub">Safety / guardrails <small>Lakera, Protect AI</small></span>
+          <span class="sub">API mgmt for AI <small>Apigee, Mulesoft</small></span>
+        </div>
+      </div>
+
+      <!-- L11 -->
+      <div class="layer l11">
+        <div class="layer-num">11</div>
+        <div class="layer-label">
+          <div class="layer-name">Application Platforms</div>
+          <div class="layer-tag">SaaS · Agentic · No-Code</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">SaaS reimagined <small>Agentforce, Now Assist, Breeze</small></span>
+          <span class="sub">Agentic work platforms <small>Cowork, Copilot Studio</small></span>
+          <span class="sub">No-code AI builders <small>v0, Bolt, Lovable</small></span>
+          <span class="sub">Comms / collab AI <small>Slack AI, Notion AI, Glean</small></span>
+          <span class="sub">Productivity suites <small>M365 Copilot, Workspace AI</small></span>
+        </div>
+      </div>
+
+      <!-- L12 -->
+      <div class="layer l12">
+        <div class="layer-num">12</div>
+        <div class="layer-label">
+          <div class="layer-name">Vertical End-User Products</div>
+          <div class="layer-tag">Verticals · Workflows · Robotics</div>
+        </div>
+        <div class="sublayers">
+          <span class="sub">Coding <small>Cursor, Claude Code, Copilot</small></span>
+          <span class="sub">Legal <small>Harvey, EvenUp, Eve</small></span>
+          <span class="sub">Healthcare <small>Abridge, Ambience, OpenEvidence</small></span>
+          <span class="sub">Finance <small>Hebbia, Rogo, Numerai</small></span>
+          <span class="sub">Support <small>Sierra, Decagon, Parloa</small></span>
+          <span class="sub">Sales / marketing <small>Clay, 11x, Regie</small></span>
+          <span class="sub">Education <small>MagicSchool, Khanmigo, Speak</small></span>
+          <span class="sub">Defense / govtech <small>Palantir, Anduril, Scale Donovan</small></span>
+          <span class="sub">Creative / media <small>Runway, ElevenLabs, Suno, MJ</small></span>
+          <span class="sub">Robotics / physical AI <small>Figure, 1X, PI</small></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CROSS-CUTTING -->
+    <aside class="crosscut">
+      <div class="crosscut-header">Vertical Bars</div>
+      <div class="crosscut-title">Cross-Cutting <em>Concerns</em></div>
+
+      <div class="crosscut-cat">
+        <div class="crosscut-cat-name">Security &amp; Trust</div>
+        <div class="crosscut-cat-items">Wiz AI · Lakera · HiddenLayer</div>
+      </div>
+
+      <div class="crosscut-cat">
+        <div class="crosscut-cat-name">Governance &amp; Compliance</div>
+        <div class="crosscut-cat-items">Credo AI · Fairly · watsonx.gov</div>
+      </div>
+
+      <div class="crosscut-cat">
+        <div class="crosscut-cat-name">FinOps for AI</div>
+        <div class="crosscut-cat-items">Vantage · Finout · CloudZero</div>
+      </div>
+
+      <div class="crosscut-cat">
+        <div class="crosscut-cat-name">Observability &amp; Evals</div>
+        <div class="crosscut-cat-items">Arize · Braintrust · LangSmith</div>
+      </div>
+
+      <div class="crosscut-cat">
+        <div class="crosscut-cat-name">Identity for Agents</div>
+        <div class="crosscut-cat-items">Arcade · Anon · WorkOS</div>
+      </div>
+
+      <div class="crosscut-foot">
+        These layers run vertically through all 12 horizontal layers and represent the highest-conviction whitespace for new entrants per the parent landscape report.
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div>
+      Companion · <span>AI Stack Landscape Report</span> · Refreshed May 26, 2026
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--l1)"></span>Silicon</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--l6)"></span>Models</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--l8)"></span>Inference</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--l11)"></span>Apps</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--l12)"></span>Verticals</span>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
