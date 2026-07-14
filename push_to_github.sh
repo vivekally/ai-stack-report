@@ -101,7 +101,7 @@ echo "         $REPO_URL"
 echo
 info "Next steps:"
 echo "   1. Open the repo:              gh browse"
-echo "   2. Preview the canonical file: open src/ai_stack_unified_search_r2026-07.html"
+echo "   2. Preview the canonical file: open src/ai_stack_unified_search_r2026-07b.html"
 echo "   3. Enable GitHub Pages if you want a hosted URL:"
 echo "                                  gh api -X POST repos/$GH_USER/$REPO_NAME/pages -f source[branch]=main -f source[path]=/src"
 echo
