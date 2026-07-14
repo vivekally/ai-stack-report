@@ -3,7 +3,7 @@
 Independent, single-file HTML landscape analysis of the AI technology stack across 12 layers, silicon through vertical end-user products. Serves as both a reference document for investors and C-suite audiences, and a demonstration of technical craft.
 
 **Last refresh:** May 26, 2026
-**Canonical file:** [`src/ai_stack_unified_search.html`](src/ai_stack_unified_search.html)
+**Canonical file:** [`src/ai_stack_unified_search_r2026-07.html`](src/ai_stack_unified_search_r2026-07.html)
 
 ---
 
@@ -24,7 +24,7 @@ The report is designed for a C-suite executive or investment committee evaluatin
 
 | File | Description |
 |---|---|
-| `ai_stack_unified_search.html` | **Current canonical.** 12-layer report with collapsible sub-layer panels, "Updates" banner with inline fact-check corrections, company search modal, D3 knowledge graph overlay, and Total Raised or Market Cap stat for every company. |
+| `ai_stack_unified_search_r2026-07.html` | **Current canonical.** 12-layer report with collapsible sub-layer panels, "Updates" banner with inline fact-check corrections, company search modal, D3 knowledge graph overlay, and Total Raised or Market Cap stat for every company. |
 | `ai_stack_landscape_report_v2.html` | Prior canonical. Same report content and update banner, without the search or graph. |
 
 ### `archive/` (immutable prior versions)
@@ -54,9 +54,9 @@ Python scripts that produce each HTML variant from the base report by injecting 
 
 ## How to view the report
 
-Open any HTML file directly in a modern browser. No build step, no server required. All CSS and JS are embedded. The only external dependency is Google Fonts and D3.js from a CDN (for the graph view in `ai_stack_unified_search.html`).
+Open any HTML file directly in a modern browser. No build step, no server required. All CSS and JS are embedded. The only external dependency is Google Fonts and D3.js from a CDN (for the graph view in `ai_stack_unified_search_r2026-07.html`).
 
-Recommended: start with `src/ai_stack_unified_search.html` and try these entry points:
+Recommended: start with `src/ai_stack_unified_search_r2026-07.html` and try these entry points:
 - Type a company name (for example: `Anthropic`, `Cerebras`, `Cursor`) in the nav search bar
 - Click `⚹ Graph View` for the force-directed knowledge graph
 - Click `+ Sub-Layers` in the nav to expand all 70 sub-layers at once
