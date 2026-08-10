@@ -24,7 +24,7 @@ The report is designed for a C-suite executive or investment committee evaluatin
 
 | File | Description |
 |---|---|
-| `ai_stack_unified_search_r2026-08.html` | **Current canonical.** August 10, 2026 refresh. 12-layer report with collapsible sub-layer panels, "Updates" banner (29 entries) with inline fact-check corrections, company search modal, D3 knowledge graph overlay (100 companies, 279 connections), and Total Raised or Market Cap stat for every company. |
+| `ai_stack_unified_search_r2026-08.html` | **Current canonical.** August 10, 2026 refresh. 12-layer report with collapsible sub-layer panels, "Updates" banner (29 entries) with inline fact-check corrections, company search modal, D3 knowledge graph overlay (103 companies, 290 connections), and Total Raised or Market Cap stat for every company. |
 | `ai_stack_landscape_report_v2.html` | Prior canonical. Same report content and update banner, without the search or graph. |
 
 ### `archive/` (immutable prior versions)
