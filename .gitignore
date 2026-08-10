@@ -33,3 +33,4 @@ scratch/
 tmp/
 *.local.html
 CLAUDE.md
+.gstack/
