@@ -66,6 +66,33 @@ Chart colours are validated for colour-vision deficiency against the report's ow
 
 ---
 
+## Publishing
+
+**This repo does not serve from `main`.** GitHub Pages is configured to serve the
+**`gh-pages`** branch, which holds a single `index.html`. Pushing to `main` updates
+the source and changes nothing a visitor sees.
+
+To publish the current canonical:
+
+```bash
+bash scripts/deploy.sh
+```
+
+It copies the canonical to `index.html` on `gh-pages` via a temporary worktree,
+refuses to publish a build missing any expected section, and pushes. Live at
+`https://vivekally.github.io/ai-stack-report/` about a minute later.
+
+Verify a deploy actually landed:
+
+```bash
+curl -s https://vivekally.github.io/ai-stack-report/ | grep -c 'id="chartpack"'
+```
+
+The other four reports in the suite each serve from `main` with a root
+`index.html`, so they need no deploy step. This repo is the exception.
+
+---
+
 ## How to view the report
 
 Open any HTML file directly in a modern browser. No build step, no server required. All CSS and JS are embedded, and the charts are inline SVG. The only external dependencies are Google Fonts and D3.js from a CDN (for the graph view).
