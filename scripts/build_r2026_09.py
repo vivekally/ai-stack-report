@@ -852,6 +852,13 @@ plain('5 <em>material changes</em> in August 17 refresh (+29 prior)',
 plain('Entries 30&ndash;34 are the August 17, 2026 refresh cycle;',
       'Entries 30&ndash;36 are the August 17, 2026 refresh cycle;', "Banner intro")
 
+plain('<span class="sb-date">Refreshed Aug 10</span>',
+      '<span class="sb-date">Refreshed Aug 17</span>', "Suite bar date")
+
+plain('Refreshed against publicly available information as of August 10, 2026.',
+      'Refreshed against publicly available information as of August 17, 2026.',
+      "Hero sub date")
+
 plain('<div class="hero-meta-item">Layers analyzed <span>12</span></div>',
       '<div class="hero-meta-item">Layers analyzed <span>12</span></div>\n'
       '    <div class="hero-meta-item">Charts <span>8</span></div>', "Hero charts count")
@@ -927,6 +934,21 @@ plain('Entries 30&ndash;36 are the August 17, 2026 refresh cycle;',
       'Entries 30&ndash;37 are the August 17, 2026 refresh cycle;', "Banner intro 37")
 
 DST.write_text(html)
+
+# ── Suite bar: group tabs into AI / Robotics, mirroring the hub. Lives in the
+# hub repo because the same patch is applied to all five reports. ──
+import subprocess
+_hub = pathlib.Path("/Users/aially/Desktop/Claude Code/vivekally.github.io/patch_suitebars.py")
+if _hub.exists():
+    r = subprocess.run(["python3", str(_hub)],
+                       cwd="/Users/aially/Desktop/Claude Code", capture_output=True, text=True)
+    if r.returncode == 0:
+        html = DST.read_text()
+        applied.append("Suite bar: AI / Robotics grouping")
+    else:
+        failed.append("suite bar patch: " + (r.stderr or r.stdout).strip()[:120])
+else:
+    failed.append("suite bar patch: patch_suitebars.py not found")
 
 print("\n".join("  OK   " + a for a in applied))
 if failed:
