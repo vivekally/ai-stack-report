@@ -2,8 +2,8 @@
 
 Independent, single-file HTML landscape analysis of the AI technology stack across 12 layers, silicon through vertical end-user products. Serves as both a reference document for investors and C-suite audiences, and a demonstration of technical craft.
 
-**Last refresh:** August 10, 2026
-**Canonical file:** [`src/ai_stack_unified_search_r2026-08.html`](src/ai_stack_unified_search_r2026-08.html)
+**Last refresh:** August 17, 2026
+**Canonical file:** [`src/ai_stack_full_r2026-09.html`](src/ai_stack_full_r2026-09.html)
 
 ---
 
@@ -11,8 +11,9 @@ Independent, single-file HTML landscape analysis of the AI technology stack acro
 
 The report is designed for a C-suite executive or investment committee evaluating where to build or invest in the AI stack. It covers:
 
-- 12 stack layers, each with definition, market sizing, competitive landscape, subcategories, dynamics, and dependencies
-- 70 sub-layers with example companies
+- 12 stack layers, each with definition, market sizing, competitive landscape, subcategories, dynamics, and value-chain dependencies
+- 77 sub-layers with example companies
+- Three cross-cutting spines (security, regulation, energy) running vertically through all 12 layers
 - Strategic gaps and whitespace opportunities grouped into three funding tiers (bootstrappable, venture-scale, deep-pocketed)
 - Executive summary with five key findings
 
@@ -24,8 +25,8 @@ The report is designed for a C-suite executive or investment committee evaluatin
 
 | File | Description |
 |---|---|
-| `ai_stack_unified_search_r2026-08.html` | **Current canonical.** August 10, 2026 refresh. 12-layer report with collapsible sub-layer panels, "Updates" banner (29 entries) with inline fact-check corrections, company search modal, D3 knowledge graph overlay (104 companies, 288 connections), and Total Raised or Market Cap stat for every company. |
-| `ai_stack_landscape_report_v2.html` | Prior canonical. Same report content and update banner, without the search or graph. |
+| `ai_stack_full_r2026-09.html` | **Current canonical.** 12 layers, 3 cross-cutting spines, demand-side adoption evidence, an 8-chart pack, and a methodology appendix. 159 companies / 453 relationships in the search index and knowledge graph. Banner 37 entries. |
+| `ai_stack_landscape_report_v2.html` | Earliest retained edition. Same report content and update banner, without the search or graph. Kept as the plain-document reference. |
 
 ### `archive/` (immutable prior versions)
 
@@ -39,10 +40,22 @@ Preserved per the publish-then-extend discipline. Never modify; only reference.
 | `option_B_structured_index.html` | Structured company search modal only, no graph |
 | `option_C_knowledge_graph.html` | D3 knowledge graph only, no modal |
 | `ai_stack_unified_search_r2026-07b.html` | July 13, 2026 refresh. Superseded by `r2026-08`; banner entries 01-19 |
+| `ai_stack_unified_search_r2026-08.html` | August 10, 2026 refresh. Banner entries 01-29; 104 companies / 288 connections. Superseded by `r2026-08b` |
+| `ai_stack_cross_cutting_r2026-08b.html` | Added Part 2 — Cross-Cutting Concerns and value-chain dependency blocks on all 12 layers. Banner entries 01-34. Superseded by `r2026-09` |
 
 ### `scripts/` (build tooling)
 
-Python scripts that produce each HTML variant from the base report by injecting CSS, JS, and content blocks. Preferred over hand-editing because HTML modification token cost is roughly 3-4x lower than direct `str_replace` when many edits are needed.
+Python scripts that produce each HTML variant from the prior canonical by injecting CSS, JS, and content blocks. Preferred over hand-editing because HTML modification token cost is roughly 3-4x lower than direct `str_replace` when many edits are needed.
+
+The chain is cumulative, and each stage reads the previous stage's output from `archive/`:
+
+| Script | Reads | Writes |
+|---|---|---|
+| `build_cross_cutting.py` | `archive/ai_stack_unified_search_r2026-08.html` | `archive/ai_stack_cross_cutting_r2026-08b.html` |
+| `build_r2026_09.py` | `archive/ai_stack_cross_cutting_r2026-08b.html` | `src/ai_stack_full_r2026-09.html` |
+| `charts.py` | (module) | inline SVG chart pack, imported by `build_r2026_09.py` |
+
+Chart colours are validated for colour-vision deficiency against the report's own dark surface (`#111318`) before use. Every figure ships a data table so identity is never carried by colour alone.
 
 ### `docs/`
 
@@ -55,13 +68,14 @@ Python scripts that produce each HTML variant from the base report by injecting 
 
 ## How to view the report
 
-Open any HTML file directly in a modern browser. No build step, no server required. All CSS and JS are embedded. The only external dependency is Google Fonts and D3.js from a CDN (for the graph view in `ai_stack_unified_search_r2026-08.html`).
+Open any HTML file directly in a modern browser. No build step, no server required. All CSS and JS are embedded, and the charts are inline SVG. The only external dependencies are Google Fonts and D3.js from a CDN (for the graph view).
 
-Recommended: start with `src/ai_stack_unified_search_r2026-08.html` and try these entry points:
-- Type a company name (for example: `Anthropic`, `Cerebras`, `Cursor`) in the nav search bar
-- Click `⚹ Graph View` for the force-directed knowledge graph
-- Click `+ Sub-Layers` in the nav to expand all 70 sub-layers at once
+Recommended: start with `src/ai_stack_full_r2026-09.html` and try these entry points:
+- Type a company name (for example: `Anthropic`, `Arista`, `Zenity`) in the nav search bar, or press `⌘K`
+- Click `⚹ Graph View` for the force-directed knowledge graph of 159 companies
+- Click `+ Sub-Layers` in the nav to expand all 77 sub-layers at once
 - Click `+ Show` on the Updates banner at the top to see fact-check corrections
+- Expand `Data table` beneath any chart to read the underlying figures
 
 ---
 
@@ -79,7 +93,9 @@ Full working conventions and design system are in `CLAUDE.md` at the repo root.
 
 ## Data model (embedded database)
 
-The company database, [`scripts/stack_db_v2.js`](scripts/stack_db_v2.js), covers ~97 companies across all 12 layers with 252 mapped relationships (compute, silicon, supplier, customer, product, competitor, partner, investor, parent).
+The company database covers **159 companies with 453 mapped relationships** (compute, silicon, supplier, customer, product, competitor, partner, investor, parent). It is embedded in the canonical HTML as `window.STACK_DB`.
+
+Every company named in a competitive table is now indexed, and all 12 layers have coverage. Companies added in the r2026-09 pass carry verified layer placement, taglines and relationships; financial stats appear only where a figure was verified that cycle, and an empty stat means unverified rather than zero.
 
 Each company has:
 - Primary and secondary layer position
