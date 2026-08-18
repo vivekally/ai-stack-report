@@ -1615,6 +1615,7 @@
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-section">Sections</div>
   <a href="#summary" data-target="summary">Executive Summary</a>
+<a href="#chartpack" data-target="chartpack">Chart Pack</a>
   <a href="#stack" data-target="stack">Stack Map</a>
   <a href="#l1" class="l2" data-target="l1">01 &middot; Silicon</a>
   <a href="#l2" class="l2" data-target="l2">02 &middot; Compute &amp; Data Centers</a>
@@ -1628,8 +1629,7 @@
   <a href="#l10" class="l2" data-target="l10">10 &middot; Middleware</a>
   <a href="#l11" class="l2" data-target="l11">11 &middot; App Platforms</a>
   <a href="#l12" class="l2" data-target="l12">12 &middot; Verticals</a>
-  <a href="#chartpack" data-target="chartpack">Chart Pack</a>
-<a href="#crosscutting" data-target="crosscutting">Cross-Cutting</a>
+  <a href="#crosscutting" data-target="crosscutting">Cross-Cutting</a>
 <a href="#adoption" data-target="adoption">Adoption &amp; ROI</a>
 <a href="#opportunities" data-target="opportunities">Opportunities</a>
 <a href="#methodology" data-target="methodology">Methodology</a>
@@ -3690,7 +3690,11 @@
     links.forEach(function(a) { idMap[a.getAttribute('data-target')] = a; });
     var sections = Object.keys(idMap).map(function(id) {
       return document.getElementById(id);
-    }).filter(Boolean);
+    }).filter(Boolean).sort(function(a, b) {
+      // Document order, not sidebar order. compareDocumentPosition is
+      // layout-independent, so expanded sub-layer panels cannot perturb it.
+      return (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1;
+    });
 
     function setActive(id) {
       links.forEach(function(a) { a.classList.remove('active'); });

@@ -950,6 +950,46 @@ if _hub.exists():
 else:
     failed.append("suite bar patch: patch_suitebars.py not found")
 
+# ══════════════════════════════════════════════════════════════
+# 10. Scroll-spy correctness
+# ══════════════════════════════════════════════════════════════
+# The spy took the LAST sidebar link whose section top was above the scroll
+# position, which silently assumed sidebar order == document order. Chart Pack
+# sits 2nd in the document but was listed after the 12 layers, so it won at
+# every layer. Sort by document position so the nav cannot desync again.
+plain("""    var sections = Object.keys(idMap).map(function(id) {
+      return document.getElementById(id);
+    }).filter(Boolean);""",
+"""    var sections = Object.keys(idMap).map(function(id) {
+      return document.getElementById(id);
+    }).filter(Boolean).sort(function(a, b) {
+      // Document order, not sidebar order. compareDocumentPosition is
+      // layout-independent, so expanded sub-layer panels cannot perturb it.
+      return (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1;
+    });""", "Scroll-spy: sort sections by document order")
+
+# Sidebar should also *read* in the order a reader meets the sections.
+plain("""<a href="#chartpack" data-target="chartpack">Chart Pack</a>\n""", "", "Sidebar: drop misplaced Chart Pack link")
+plain("""<a href="#summary" data-target="summary">Executive Summary</a>""",
+      """<a href="#summary" data-target="summary">Executive Summary</a>\n"""
+      """<a href="#chartpack" data-target="chartpack">Chart Pack</a>""",
+      "Sidebar: Chart Pack after Executive Summary")
+
+# Guard: fail the build if the two orders ever diverge again.
+_side = re.findall(r'data-target="([a-z0-9]+)"', html)
+_docs = re.findall(r'<section class="[a-z\- ]*" id="([a-z0-9]+)"', html)
+_docs = [d for d in _docs if d in set(_side)]
+if _side != _docs:
+    failed.append(f"sidebar/document order mismatch\n         sidebar: {_side}\n         document:{_docs}")
+else:
+    applied.append(f"Order guard: sidebar matches document ({len(_side)} sections)")
+
+DST.write_text(html)
+r = subprocess.run(["python3", str(_hub)], cwd="/Users/aially/Desktop/Claude Code",
+                   capture_output=True, text=True)
+if r.returncode == 0:
+    applied.append("Suite bar re-applied after nav fix")
+
 print("\n".join("  OK   " + a for a in applied))
 if failed:
     print("\nFAILED:"); print("\n".join("  FAIL " + f for f in failed)); sys.exit(1)
