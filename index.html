@@ -1577,6 +1577,24 @@
     border-bottom: 1px dotted rgba(94,231,196,0.45);
   }
   a.cite:hover { color: var(--accent); border-bottom-style: solid; }
+
+  .xc-toggle {
+    margin: 0.4rem 0 0; display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 7px 14px; background: transparent;
+    border: 1px solid rgba(94,231,196,0.3); border-radius: 3px;
+    color: var(--accent); font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .xc-toggle:hover { background: rgba(94,231,196,0.08); border-color: var(--accent); }
+  .xc-toggle .icon { display:inline-block; transition: transform 0.2s ease; }
+  .xc-toggle[aria-expanded="true"] .icon { transform: rotate(90deg); }
+  .xc-toggle .label-expanded { display: none; }
+  .xc-toggle[aria-expanded="true"] .label-collapsed { display: none; }
+  .xc-toggle[aria-expanded="true"] .label-expanded { display: inline; }
+  .xc-body { display: none; margin-top: 2rem; }
+  .xc-body.open { display: block; animation: xcFade .22s ease; }
+  @keyframes xcFade { from { opacity: 0; } to { opacity: 1; } }
 </style>
 </head>
 <body>
@@ -1629,9 +1647,9 @@
   <a href="#l10" class="l2" data-target="l10">10 &middot; Middleware</a>
   <a href="#l11" class="l2" data-target="l11">11 &middot; App Platforms</a>
   <a href="#l12" class="l2" data-target="l12">12 &middot; Verticals</a>
-  <a href="#crosscutting" data-target="crosscutting">Cross-Cutting</a>
-<a href="#adoption" data-target="adoption">Adoption &amp; ROI</a>
+  <a href="#adoption" data-target="adoption">Adoption &amp; ROI</a>
 <a href="#opportunities" data-target="opportunities">Opportunities</a>
+<a href="#crosscutting" data-target="crosscutting">Cross-Cutting</a>
 <a href="#methodology" data-target="methodology">Methodology</a>
 </aside>
 <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
@@ -1972,7 +1990,7 @@
           <div class="update-num">34</div>
           <div class="update-body">
             <div class="update-headline">Zenity <span class="new">$125M Series C (Aug 3, 2026)</span> &mdash; missed by the Aug 10 refresh</div>
-            <div class="update-detail">Zenity closed a <span class="new">$125M Series C led by Norwest</span> on Aug 3, 2026, bringing total funding to ~$185M, with SoftBank Vision Fund 2, Hitachi Ventures, Qumra and LG Technology Ventures participating. The round closed seven days before the last refresh and was not captured. Zenity secures AI agent actions inside enterprises, which is the Layer 09 surface the Agent Compliance opportunity in Part 4 targets. Broader context: <span class="new">AI-native security overtook identity as the fastest-growing VC category in Q1 2026 at $4.1B, +47% YoY</span>.</div>
+            <div class="update-detail">Zenity closed a <span class="new">$125M Series C led by Norwest</span> on Aug 3, 2026, bringing total funding to ~$185M, with SoftBank Vision Fund 2, Hitachi Ventures, Qumra and LG Technology Ventures participating. The round closed seven days before the last refresh and was not captured. Zenity secures AI agent actions inside enterprises, which is the Layer 09 surface the Agent Compliance opportunity in Part 3 targets. Broader context: <span class="new">AI-native security overtook identity as the fastest-growing VC category in Q1 2026 at $4.1B, +47% YoY</span>.</div>
             <div class="update-source">Source: BusinessWire, Aug 3, 2026; Intel Capital</div>
           </div>
         </div>
@@ -1981,7 +1999,7 @@
           <div class="update-num">35</div>
           <div class="update-body">
             <div class="update-headline">Demand-side evidence added: <span class="new">88% adopt, ~6% capture EBIT value</span></div>
-            <div class="update-detail">Part 3 adds the demand-side lens the report previously lacked entirely. Stanford AI Index 2026 puts enterprise adoption at <span class="new">88% in at least one function</span> but <span class="new">under 10% fully scaled in any function</span>; McKinsey finds <span class="new">only 39% attribute any EBIT impact</span> and <span class="new">~6% report impact above 5%</span>. Gartner projects <span class="new">40%+ of agentic projects cancelled by 2027</span>. This materially qualifies the supply-side valuations throughout Parts 1 and 2.</div>
+            <div class="update-detail">Part 3 adds the demand-side lens the report previously lacked entirely. Stanford AI Index 2026 puts enterprise adoption at <span class="new">88% in at least one function</span> but <span class="new">under 10% fully scaled in any function</span>; McKinsey finds <span class="new">only 39% attribute any EBIT impact</span> and <span class="new">~6% report impact above 5%</span>. Gartner projects <span class="new">40%+ of agentic projects cancelled by 2027</span>. This materially qualifies the supply-side valuations throughout the report.</div>
             <div class="update-source">Source: Stanford HAI AI Index 2026; McKinsey State of AI 2026; PwC Global AI Jobs Barometer 2026</div>
           </div>
         </div>
@@ -1990,7 +2008,7 @@
           <div class="update-num">36</div>
           <div class="update-body">
             <div class="update-headline">Layer 03 database gap closed; <span class="new">+55 companies indexed</span></div>
-            <div class="update-detail">Layer 03 (Networking) previously had <span class="new">zero companies</span> in the search index and knowledge graph despite eight appearing in its own competitive table, so every company modal rendered an empty row for it. Arista, Cisco, Astera Labs, Credo, Cornelis, DriveNets and Celestica are now indexed, along with companies named in report tables but previously unsearchable (Hugging Face, MongoDB, Perplexity, Replit, IBM, Datadog, vLLM and others) and the security vendors introduced in Part 2.</div>
+            <div class="update-detail">Layer 03 (Networking) previously had <span class="new">zero companies</span> in the search index and knowledge graph despite eight appearing in its own competitive table, so every company modal rendered an empty row for it. Arista, Cisco, Astera Labs, Credo, Cornelis, DriveNets and Celestica are now indexed, along with companies named in report tables but previously unsearchable (Hugging Face, MongoDB, Perplexity, Replit, IBM, Datadog, vLLM and others) and the security vendors introduced in Part 4.</div>
             <div class="update-source">Source: internal database audit, Aug 17, 2026</div>
           </div>
         </div>
@@ -1999,7 +2017,7 @@
           <div class="update-num">37</div>
           <div class="update-body">
             <div class="update-headline">Layer 02 capex headline corrected: <s>$650&ndash;700B</s> <span class="new">~$725B</span></div>
-            <div class="update-detail">The Layer 02 Market Sizing headline still read <span class="new">$650&ndash;700B</span> after the Q2 2026 hyperscaler figures were corrected inline in entry 20. Its own detail text now sums to roughly <span class="new">$732B</span> (AMZN ~$220B, GOOGL $195&ndash;205B, META $130&ndash;145B, MSFT ~$175B calendar 2026), and the FinOps opportunity in Part 4 already cited ~$720&ndash;745B. The headline was the last place carrying the stale range. Found by cross-checking the new layer-sizing chart against the card it summarises.</div>
+            <div class="update-detail">The Layer 02 Market Sizing headline still read <span class="new">$650&ndash;700B</span> after the Q2 2026 hyperscaler figures were corrected inline in entry 20. Its own detail text now sums to roughly <span class="new">$732B</span> (AMZN ~$220B, GOOGL $195&ndash;205B, META $130&ndash;145B, MSFT ~$175B calendar 2026), and the FinOps opportunity in Part 3 already cited ~$720&ndash;745B. The headline was the last place carrying the stale range. Found by cross-checking the new layer-sizing chart against the card it summarises.</div>
             <div class="update-source">Source: Q2 2026 hyperscaler earnings, Jul 22&ndash;30, 2026; internal consistency audit</div>
           </div>
         </div>
@@ -2518,7 +2536,7 @@
     <div class="dep-block-label">Value-Chain Dependencies &mdash; Layer 05</div>
       <div class="dep-row"><div class="dep-key">Upstream</div><div class="dep-val">L04 storage and compute primitives.</div></div>
       <div class="dep-row"><div class="dep-key">Downstream</div><div class="dep-val">Quality ceiling for L06 training and L08 retrieval. 87% of enterprises still cite data readiness as the primary impediment to AI deployment.</div></div>
-      <div class="dep-row"><div class="dep-key">Security surface</div><div class="dep-val">Training-data poisoning, provenance and lineage, and PII or PHI leakage into corpora. This is the layer the Enterprise Context Governance opportunity in Part 4 is built on.</div></div>
+      <div class="dep-row"><div class="dep-key">Security surface</div><div class="dep-val">Training-data poisoning, provenance and lineage, and PII or PHI leakage into corpora. This is the layer the Enterprise Context Governance opportunity in Part 3 is built on.</div></div>
       <div class="dep-row"><div class="dep-key">Regulatory exposure</div><div class="dep-val">Copyright and lawful basis for training data, plus residency. Regulatory risk concentrates here more than at L06, because the exposure attaches to the corpus rather than the weights.</div></div>
       <div class="dep-row"><div class="dep-key">Power intensity</div><div class="dep-val">Storage and ETL draw is small relative to L02 and is not a meaningful constraint.</div></div>
   </div>
@@ -2839,7 +2857,7 @@
       <div class="dep-row"><div class="dep-key">Upstream</div><div class="dep-val">L08 serving endpoints and L10 tool connectivity.</div></div>
       <div class="dep-row"><div class="dep-key">Downstream</div><div class="dep-val">Agent reliability here determines whether L11 and L12 products can credibly sell outcomes rather than assistance, which is the entire premise of the pricing transition in Finding 5.</div></div>
       <div class="dep-row"><div class="dep-key">Security surface</div><div class="dep-val"><strong>The fastest-moving attack surface in the stack.</strong> Agent permissions, tool-call sandboxing, egress control, human-in-loop gates. Autonomy is outpacing controls: Zenity raised a $125M Series C on August 3, 2026 explicitly against this surface.</div></div>
-      <div class="dep-row"><div class="dep-key">Regulatory exposure</div><div class="dep-val">Audit trails and action logging. Both the June 2026 US EO and EU record-keeping expectations land here, which is what turned the Agent Compliance opportunity in Part 4 into a procurement gate.</div></div>
+      <div class="dep-row"><div class="dep-key">Regulatory exposure</div><div class="dep-val">Audit trails and action logging. Both the June 2026 US EO and EU record-keeping expectations land here, which is what turned the Agent Compliance opportunity in Part 3 into a procurement gate.</div></div>
       <div class="dep-row"><div class="dep-key">Power intensity</div><div class="dep-val">Negligible directly, but multiplies L08 load: a multi-step agent trace can consume 10&ndash;100&times; the tokens of a single completion.</div></div>
   </div>
   <button class="sublayer-toggle" aria-expanded="false" data-layer="9" style="--lc:var(--l9)">
@@ -2909,7 +2927,7 @@
         <tr><td>6</td><td><strong>LiteLLM</strong></td><td>Open-source proxy</td><td>Unified API across 100+ LLM providers; load balancing</td><td>Open-source</td><td>De facto standard for multi-model orchestration</td></tr>
         <tr><td>7</td><td><strong>Datadog</strong></td><td>AI observability</td><td>LLM monitoring integrated into existing APM</td><td>Part of $2.2B Datadog revenue</td><td>Leveraging enterprise relationships</td></tr>
         <tr><td>8</td><td><strong>Mem0 / Zep</strong></td><td>AI memory management</td><td>Persistent memory for AI agents across sessions</td><td>$10–20M raised each</td><td>Solving context management at scale</td></tr>
-        <tr><td>9</td><td><strong><span class="new-val">Coconut</span></strong></td><td>Shared context layer for AI agents</td><td>Model-agnostic, governed, versioned company context; every fact carries its source, and gaps are flagged rather than filled with a guess</td><td>Private (Coconut AI Inc.)</td><td>Targets the context-governance gap named in Part 2. Competitive set is platform-native, not peer: Claude Projects/Cowork, ChatGPT memory, and M365 Copilot can each bundle this away, with Glean ($300M ARR) the comparison every enterprise buyer makes</td></tr>
+        <tr><td>9</td><td><strong><span class="new-val">Coconut</span></strong></td><td>Shared context layer for AI agents</td><td>Model-agnostic, governed, versioned company context; every fact carries its source, and gaps are flagged rather than filled with a guess</td><td>Private (Coconut AI Inc.)</td><td>Targets the context-governance gap named in Part 4. Competitive set is platform-native, not peer: Claude Projects/Cowork, ChatGPT memory, and M365 Copilot can each bundle this away, with Glean ($300M ARR) the comparison every enterprise buyer makes</td></tr>
       </tbody>
     </table>
   </div>
@@ -3079,7 +3097,7 @@
       <div class="dep-row"><div class="dep-key">Upstream</div><div class="dep-val">Everything below. Most vertical vendors are thin on infrastructure and deep on workflow, which is why they are the least power-exposed and most regulation-exposed layer.</div></div>
       <div class="dep-row"><div class="dep-key">Downstream</div><div class="dep-val">Terminal layer. Where realized ROI either materialises or does not, and therefore where the demand-side evidence for the whole stack has to come from.</div></div>
       <div class="dep-row"><div class="dep-key">Security surface</div><div class="dep-val"><strong>The spine inverts here.</strong> L01 through L11 are about securing AI; L12 is where AI is sold as security. AI-native security overtook identity as the fastest-growing VC category in Q1 2026 at $4.1B, up 47% year over year.</div></div>
-      <div class="dep-row"><div class="dep-key">Regulatory exposure</div><div class="dep-val">Sectoral certification per vertical is the moat named in the top-ranked opportunity in Part 4: state-by-state insurance rules, HIPAA, FINRA, FDA.</div></div>
+      <div class="dep-row"><div class="dep-key">Regulatory exposure</div><div class="dep-val">Sectoral certification per vertical is the moat named in the top-ranked opportunity in Part 3: state-by-state insurance rules, HIPAA, FINRA, FDA.</div></div>
       <div class="dep-row"><div class="dep-key">Power intensity</div><div class="dep-val">Negligible.</div></div>
   </div>
   <button class="sublayer-toggle" aria-expanded="false" data-layer="12" style="--lc:var(--l12)">
@@ -3113,153 +3131,15 @@
      PART 2: OPPORTUNITIES
 ══════════════════════════════ -->
 
-<!-- ══════════════════════════════════════════
-     PART 2 — CROSS-CUTTING CONCERNS
-═══════════════════════════════════════════ -->
-<section class="section" id="crosscutting">
-  <div class="section-label">Part 2 — Cross-Cutting Concerns</div>
-  <h2>Three Spines Through the Stack</h2>
-  <p class="xc-intro">Part 1 reads the stack by altitude: each layer consumes the one below and supplies the one above. Three forces do not respect that structure. <strong>Security, regulation and energy cut vertically through all twelve layers</strong>, and none of them can be located at a single altitude. Treating any of them as a thirteenth layer would be a category error, because a layer is defined by what it consumes and what it supplies, and these consume and supply at every level at once.<br><br>Each spine below is the stack transposed: one row per layer, read top to bottom. The pattern each one traces is the finding. Security runs as a defensive concern from L01 to L11 and then <strong>inverts at L12</strong>, where AI is sold as security rather than secured. Regulation concentrates at the two ends and thins in the middle. Energy binds hard at the bottom four layers and is close to irrelevant above them, which is itself worth seeing at a glance rather than asserting.</p>
-
-
-  <div class="spine" id="xc-security">
-    <div class="spine-head">
-      <h3>Security &amp; Trust</h3>
-      <span class="spine-tag">Spine 01</span>
-    </div>
-    <div class="layer-body">
-      <div class="info-card">
-        <h4>Market Sizing</h4>
-        <div class="stat">$1.65B &rarr; $13.5B</div>
-        <p>Two markets, not one, and conflating them is the standard error. <strong>AI applied to security</strong> is mature at roughly $30&ndash;35B in 2026. <strong>Securing AI itself</strong> is far smaller and far faster: MarketsandMarkets puts agentic AI security at $1.65B in 2026 reaching $13.5B by 2032 (42% CAGR), while Dell'Oro sizes AI systems security at close to $8B by 2030 from a standing start in 2024.</p>
-      </div>
-      <div class="info-card">
-        <h4>Key Dynamics</h4>
-        <p><strong>Consolidation is running ahead of category formation.</strong> Palo Alto absorbed Protect AI, Check Point took Lakera, Cisco took both Robust Intelligence and Astrix, and Cyera signed a $1B letter of intent for Oasis. Independents are being acquired before reaching scale, which implies the durable position in most of this spine is a feature inside a platform rather than a standalone product. The exception is the agent layer, where Zenity's $125M Series C in August 2026 shows capital still funding independents. For an investor the read is straightforward: at L07 and L08 you are underwriting an acqui-exit, at L09 and L12 you are still underwriting a company.</p>
-      </div>
-    </div>
-    <div class="table-wrap">
-      <table class="xc-table">
-        <thead><tr><th>Layer</th><th>Exposure at this altitude</th><th>Who sells here</th><th>Signal</th></tr></thead>
-        <tbody>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l1)">01</span></td><td>Hardware root of trust, TEEs on-accelerator, die and package attestation</td><td>NVIDIA Confidential Computing, Intel TDX, AMD SEV-SNP, Arm CCA</td><td>Blackwell is the first TEE-I/O capable GPU; confidential-mode throughput penalty fell from 30&ndash;40% to near parity</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l2)">02</span></td><td>Tenant isolation on shared GPU fleets, memory residue, BMC and firmware</td><td>Fortanix, Edgeless Systems, operator-native controls</td><td>Neocloud tenancy is less hardened than hyperscaler; audit evidence gap widening</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l3)">03</span></td><td>East-west encryption at RDMA line rate, fabric segmentation</td><td>NVIDIA BlueField DPUs, Cisco Hypershield, Arista</td><td>Encryption at 800G without throughput loss remains unsolved cheaply</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l4)">04</span></td><td>Non-human and agent identity, KMS, endpoint access control</td><td>Astrix (Cisco), Oasis (Cyera $1B LOI), Entro, GitGuardian, Wiz</td><td>Fastest-consolidating category; NHI rounds passed $340M in the last year</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l5)">05</span></td><td>Training-data poisoning, provenance and lineage, PII and PHI leakage</td><td>Cyera, Varonis, BigID, Unity Catalog</td><td>Underpins the Enterprise Context Governance opportunity in Part 4</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l6)">06</span></td><td>Weight exfiltration, dangerous-capability evals, pre-release red teaming</td><td>Gray Swan, Irregular, Haize Labs, lab-internal</td><td>Gray Swan $40M Series A (May 2026); cited in 11 frontier model system cards</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l7)">07</span></td><td>Model artifact supply chain, unsafe deserialization, malicious hub models</td><td>HiddenLayer, Prisma AIRS (ex-Protect AI), JFrog ML</td><td>Protect AI absorbed by Palo Alto Jul 2025; HiddenLayer independent on $56M</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l8)">08</span></td><td>Runtime prompt injection, output filtering, redaction, token flooding</td><td>Prompt Security, Lakera (Check Point), Robust Intelligence (Cisco)</td><td>Two of the three leading independents acquired; this layer is now platform-owned</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l9)">09</span></td><td>Agent permissions, tool-call sandboxing, egress control, human-in-loop gates</td><td>Zenity, Invariant Labs, E2B, Browserbase</td><td>Zenity $125M Series C (Aug 3, 2026); capital still backing independents here</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l10)">10</span></td><td>MCP server trust and authn, gateway policy, spend limits as a control</td><td>Cloudflare AI Gateway, Portkey, Kong</td><td>OX Security disclosed ~200,000 vulnerable MCP instances (Apr 2026); NSA guidance since issued</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l11)">11</span></td><td>DLP for copilots, oversharing via enterprise search, shadow AI</td><td>Microsoft Purview, Netskope, Island, Witness AI</td><td>Oversharing is the most-cited blocker to copilot rollout; a permissions problem, not a model problem</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l12)">12</span></td><td><strong>AI applied to security operations</strong> &mdash; detection, triage, response</td><td>CrowdStrike Charlotte, Microsoft Security Copilot, Dropzone, Prophet, Torq</td><td>Dropzone $57.4M / 100+ enterprise customers; Prophet $41M; all three majors shipped agentic SOC at RSAC 2026</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="xc-conc">
-      <div class="xc-conc-label">Where value concentrates</div>
-      <p><strong>L04, L09 and L12.</strong> Identity (L04) and agent control (L09) are the two surfaces where enterprises are actively writing cheques and where no incumbent yet owns the category. L12 is a genuine vertical with real revenue. Everything else is either already absorbed into platform vendors (L07, L08) or inherited from general infrastructure security (L02, L03), and should be priced as a feature rather than a market.</p>
-    </div>
-  </div>
-
-
-
-  <div class="spine" id="xc-regulation">
-    <div class="spine-head">
-      <h3>Regulation &amp; Governance</h3>
-      <span class="spine-tag">Spine 02</span>
-    </div>
-    <div class="layer-body">
-      <div class="info-card">
-        <h4>Market Sizing</h4>
-        <div class="stat">Two diverging regimes</div>
-        <p>Not a market so much as a procurement gate and a compliance cost. The adjacent GRC software market is roughly $15B. The material fact for 2026 is <strong>divergence in kind</strong>: the US June 2026 Executive Order is voluntary and access-based, while the EU is prescriptive. Any vendor selling into both now needs dual-regime evidence, and nobody produces it off the shelf.</p>
-      </div>
-      <div class="info-card">
-        <h4>Key Dynamics</h4>
-        <p><strong>The EU timeline just moved, and it moved in the direction that reduces near-term pressure.</strong> On June 16, 2026 the European Parliament deferred most high-risk obligations: Annex III use-based duties slip from August 2026 to December 2027, and Annex I product-regulated duties from August 2027 to August 2028. What did take effect on schedule on August 2, 2026 is Article 50 transparency and AI Office enforcement over general-purpose models. The practical consequence is that near-term obligations are about disclosure and GPAI, not high-risk certification, which pushes the compliance-tooling opportunity in Part 4 further out than the July reading implied.</p>
-      </div>
-    </div>
-    <div class="table-wrap">
-      <table class="xc-table">
-        <thead><tr><th>Layer</th><th>Exposure at this altitude</th><th>What applies</th><th>Signal</th></tr></thead>
-        <tbody>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l1)">01</span></td><td>Export controls, entity lists, fab and tooling restrictions</td><td>Jan 2026 Commerce rule reopened H200 / MI325X to China; late-May 2026 rules re-tightened on Blackwell and closed the offshore-subsidiary loophole</td><td>Chinese vendors took ~41% of China's AI accelerator server market in 2025, up from NVIDIA's ~95% share in 2022 (IDC)</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l2)">02</span></td><td>Siting, permitting, water disclosure, large-load interconnection</td><td>200+ state data-centre bills in 2025, 40+ enacted; DOE proposed federal jurisdiction over loads above 20MW</td><td>Regulatory risk is now local and political, not federal</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l3)">03</span></td><td>Export controls on high-end networking equipment</td><td>Inherited from L01 and L02</td><td>Low direct exposure</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l4)">04</span></td><td>Data residency and sovereignty</td><td>EU residency requirements enforced at the cloud boundary</td><td>The main transmission path for EU obligations into US vendors</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l5)">05</span></td><td>Copyright, lawful basis for training data, residency</td><td>Active litigation across jurisdictions</td><td>Exposure attaches to the corpus, not the weights, so it concentrates here rather than at L06</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l6)">06</span></td><td>GPAI obligations, transparency, pre-release evaluation</td><td><strong>EU Article 50 and GPAI enforcement took effect Aug 2, 2026 as scheduled.</strong> High-risk obligations deferred: Annex III to Dec 2027, Annex I to Aug 2028 (Parliament vote, Jun 16, 2026)</td><td>US June 2026 EO is voluntary and access-based; the two regimes are diverging in kind, not just in degree</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l7)">07</span></td><td>Documentation, record-keeping, third-party assessment</td><td>Lands here first when high-risk rules apply</td><td>Deferred to Dec 2027, which removes near-term urgency</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l8)">08</span></td><td>Content marking, deepfake labelling, output disclosure</td><td>Article 50 enforced at the serving boundary, live now</td><td>The one EU obligation with immediate teeth</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l9)">09</span></td><td>Audit trails, action logging, human oversight</td><td>June 2026 US EO and EU record-keeping both land here</td><td>Turned agent governance evidence into a procurement gate</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l10)">10</span></td><td>Policy enforcement and evidence generation</td><td>Natural enforcement point for both regimes</td><td>The gateway is the only component that sees every call</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l11)">11</span></td><td>Workplace surveillance, accessibility, employment law</td><td>Attaches to the deploying enterprise, not the vendor</td><td>Underrated; rarely appears in vendor risk registers</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l12)">12</span></td><td>Sectoral certification per vertical</td><td>State-by-state insurance, HIPAA, FINRA, FDA</td><td>The moat named in the top-ranked opportunity in Part 4</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="xc-conc">
-      <div class="xc-conc-label">Where value concentrates</div>
-      <p><strong>L01 and L06, with a long tail at L12.</strong> Export controls at silicon are the highest-consequence regulatory force in the stack and the one this report has historically under-covered. L06 carries the live EU obligations. L12 carries sectoral certification, which is a moat rather than a cost. The middle of the stack (L03, L07, L10) is largely regulated by inheritance.</p>
-    </div>
-  </div>
-
-
-
-  <div class="spine" id="xc-energy">
-    <div class="spine-head">
-      <h3>Energy &amp; Physical Constraints</h3>
-      <span class="spine-tag">Spine 03</span>
-    </div>
-    <div class="layer-body">
-      <div class="info-card">
-        <h4>Market Sizing</h4>
-        <div class="stat">~485 &rarr; ~945 TWh</div>
-        <p>Global data-centre electricity consumption was approximately <strong>485 TWh in 2025</strong>, and the IEA base case projects roughly <strong>945 TWh by 2030</strong>, about 3% of global electricity, up from 1.5% in 2024. Accelerated servers grow near 30% annually against 9% for conventional servers and account for close to half the net increase. <em>This corrects the 1,000 TWh-in-2026 figure carried in prior editions, which was a 2024-vintage projection that did not materialise.</em></p>
-      </div>
-      <div class="info-card">
-        <h4>Key Dynamics</h4>
-        <p><strong>The constraint is interconnection, not generation.</strong> There is no shortage of prospective electrons; there is a shortage of approved connections and delivery timelines. ERCOT alone received 198GW of large-load applications in Q1 2026 against a 438GW queue, energization runs 4&ndash;7 years in major hubs, and DOE has moved to assert federal jurisdiction over loads above 20MW specifically to compress that. This is why Amazon can state that $220B of 2026 capex still will not meet demand: capital is not the binding input.</p>
-      </div>
-    </div>
-    <div class="table-wrap">
-      <table class="xc-table">
-        <thead><tr><th>Layer</th><th>Exposure at this altitude</th><th>Evidence</th><th>Signal</th></tr></thead>
-        <tbody>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l1)">01</span></td><td>Wafer and advanced-packaging capacity; perf-per-watt</td><td>CoWoS allocation, HBM supply</td><td>Every efficiency gain here compounds through all 11 layers above</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l2)">02</span></td><td><strong>Grid interconnection, firm generation, water, shells</strong></td><td>ERCOT took 198GW of large-load applications in Q1 2026 against a 438GW queue</td><td>Energization runs 4&ndash;7 years in major hubs, up to a decade elsewhere. ~60% of hyperscaler capex is power and shells</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l3)">03</span></td><td>Optics and switching power draw</td><td>Rising share of rack power as clusters scale</td><td>One of the few remaining cheap efficiency levers</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l4)">04</span></td><td>PUE, siting economics, cooling</td><td>Hyperscaler PUE gains largely exhausted; long tail still has headroom</td><td>Sets the floor under every price above</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l5)">05</span></td><td>Storage and ETL draw</td><td>Small relative to L02</td><td><span class="xc-thin">Not a binding constraint</span></td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l6)">06</span></td><td>Training-run power events</td><td>Largest single events, but inference has overtaken training in aggregate</td><td>Training is the headline; inference is the curve</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l7)">07</span></td><td>Quantization and distillation as demand-side levers</td><td>The only relief that does not require new generation</td><td><span class="xc-thin">Lever, not a constraint</span></td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l8)">08</span></td><td><strong>Steady-state token-serving load</strong></td><td>Now over 55% of AI infrastructure spend</td><td>Inference efficiency, not training efficiency, determines the 2030 power curve</td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l9)">09</span></td><td>Multi-step agent traces multiply L08 draw</td><td>A single agent trace can consume 10&ndash;100&times; the tokens of one completion</td><td><span class="xc-thin">Indirect multiplier</span></td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l10)">10</span></td><td>Routing and caching as efficiency levers</td><td>Semantic caching and cheap-model routing</td><td><span class="xc-thin">Lever, not a constraint</span></td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l11)">11</span></td><td>None material</td><td>&mdash;</td><td><span class="xc-thin">Not a binding constraint</span></td></tr>
-        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l12)">12</span></td><td>None material</td><td>&mdash;</td><td><span class="xc-thin">Not a binding constraint</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="xc-conc">
-      <div class="xc-conc-label">Where value concentrates</div>
-      <p><strong>L01 through L04 only.</strong> The thinness of the top eight rows is the finding, not a gap in the research. Physical constraints bind at the bottom of the stack and are close to irrelevant above L04, which is precisely why application-layer companies can scale without capital intensity while infrastructure companies cannot. The one exception worth watching is L08 and L09: inference efficiency and agent-trace multiplication are demand-side levers on L02 power draw, and they are the only levers available on a shorter horizon than grid interconnection.</p>
-    </div>
-  </div>
-
-</section>
 
 
 <!-- ══════════════════════════════════════════
      PART 3 — ADOPTION & REALIZED VALUE
 ═══════════════════════════════════════════ -->
 <section class="section" id="adoption">
-  <div class="section-label">Part 3 — Adoption &amp; Realized Value</div>
+  <div class="section-label">Part 2 — Adoption &amp; Realized Value</div>
   <h2>What Buyers Actually Did</h2>
-  <p class="xc-intro">Parts 1 and 2 are supply-side: who builds what, and which
-  forces cut across them. Neither answers the question an investment committee
+  <p class="xc-intro">Part 1 is supply-side: who builds what, layer by layer. It does not answer the question an investment committee
   asks first, which is <strong>whether any of this is working for the people
   paying for it</strong>. This part is the demand side, and it is deliberately
   less flattering than the rest of the document.<br><br>The headline is a gap.
@@ -3329,7 +3209,7 @@
       anticipate, this is an expectations problem: buyers are underwriting returns
       the deployed systems are not yet producing. For vendors this is a
       near-term revenue risk that does not show up in any ARR chart, and it is the
-      demand-side reason the governance opportunities in Part 4 are rated as
+      demand-side reason the governance opportunities in Part 3 are rated as
       highly as they are.</p>
     </div>
   </div>
@@ -3363,7 +3243,7 @@
 </section>
 
 <section class="section" id="opportunities">
-  <div class="section-label">Part 4 — Strategic Gaps &amp; Opportunities</div>
+  <div class="section-label">Part 3 — Strategic Gaps &amp; Opportunities</div>
   <h2>Where to Build</h2>
 
   <!-- BOOTSTRAPPABLE -->
@@ -3590,6 +3470,151 @@
 </section>
 
 
+<!-- ══════════════════════════════════════════
+     PART 2 — CROSS-CUTTING CONCERNS
+═══════════════════════════════════════════ -->
+<section class="section" id="crosscutting">
+  <div class="section-label">Part 4 — Cross-Cutting Concerns</div>
+  <h2>Three Spines Through the Stack</h2>
+  <p class="xc-intro">Part 1 reads the stack by altitude: each layer consumes the one below and supplies the one above. Three forces do not respect that structure. <strong>Security, regulation and energy cut vertically through all twelve layers</strong>, and none of them can be located at a single altitude. Treating any of them as a thirteenth layer would be a category error, because a layer is defined by what it consumes and what it supplies, and these consume and supply at every level at once.<br><br>Each spine below is the stack transposed: one row per layer, read top to bottom. The pattern each one traces is the finding. Security runs as a defensive concern from L01 to L11 and then <strong>inverts at L12</strong>, where AI is sold as security rather than secured. Regulation concentrates at the two ends and thins in the middle. Energy binds hard at the bottom four layers and is close to irrelevant above them, which is itself worth seeing at a glance rather than asserting.</p>
+
+
+  <button class="xc-toggle" id="xcToggle" aria-expanded="false" aria-controls="xcBody">
+    <span class="icon">&#9656;</span>
+    <span class="label-collapsed">Show the three spines</span>
+    <span class="label-expanded">Hide the three spines</span>
+  </button>
+  <div class="xc-body" id="xcBody">
+<div class="spine" id="xc-security">
+    <div class="spine-head">
+      <h3>Security &amp; Trust</h3>
+      <span class="spine-tag">Spine 01</span>
+    </div>
+    <div class="layer-body">
+      <div class="info-card">
+        <h4>Market Sizing</h4>
+        <div class="stat">$1.65B &rarr; $13.5B</div>
+        <p>Two markets, not one, and conflating them is the standard error. <strong>AI applied to security</strong> is mature at roughly $30&ndash;35B in 2026. <strong>Securing AI itself</strong> is far smaller and far faster: MarketsandMarkets puts agentic AI security at $1.65B in 2026 reaching $13.5B by 2032 (42% CAGR), while Dell'Oro sizes AI systems security at close to $8B by 2030 from a standing start in 2024.</p>
+      </div>
+      <div class="info-card">
+        <h4>Key Dynamics</h4>
+        <p><strong>Consolidation is running ahead of category formation.</strong> Palo Alto absorbed Protect AI, Check Point took Lakera, Cisco took both Robust Intelligence and Astrix, and Cyera signed a $1B letter of intent for Oasis. Independents are being acquired before reaching scale, which implies the durable position in most of this spine is a feature inside a platform rather than a standalone product. The exception is the agent layer, where Zenity's $125M Series C in August 2026 shows capital still funding independents. For an investor the read is straightforward: at L07 and L08 you are underwriting an acqui-exit, at L09 and L12 you are still underwriting a company.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="xc-table">
+        <thead><tr><th>Layer</th><th>Exposure at this altitude</th><th>Who sells here</th><th>Signal</th></tr></thead>
+        <tbody>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l1)">01</span></td><td>Hardware root of trust, TEEs on-accelerator, die and package attestation</td><td>NVIDIA Confidential Computing, Intel TDX, AMD SEV-SNP, Arm CCA</td><td>Blackwell is the first TEE-I/O capable GPU; confidential-mode throughput penalty fell from 30&ndash;40% to near parity</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l2)">02</span></td><td>Tenant isolation on shared GPU fleets, memory residue, BMC and firmware</td><td>Fortanix, Edgeless Systems, operator-native controls</td><td>Neocloud tenancy is less hardened than hyperscaler; audit evidence gap widening</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l3)">03</span></td><td>East-west encryption at RDMA line rate, fabric segmentation</td><td>NVIDIA BlueField DPUs, Cisco Hypershield, Arista</td><td>Encryption at 800G without throughput loss remains unsolved cheaply</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l4)">04</span></td><td>Non-human and agent identity, KMS, endpoint access control</td><td>Astrix (Cisco), Oasis (Cyera $1B LOI), Entro, GitGuardian, Wiz</td><td>Fastest-consolidating category; NHI rounds passed $340M in the last year</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l5)">05</span></td><td>Training-data poisoning, provenance and lineage, PII and PHI leakage</td><td>Cyera, Varonis, BigID, Unity Catalog</td><td>Underpins the Enterprise Context Governance opportunity in Part 3</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l6)">06</span></td><td>Weight exfiltration, dangerous-capability evals, pre-release red teaming</td><td>Gray Swan, Irregular, Haize Labs, lab-internal</td><td>Gray Swan $40M Series A (May 2026); cited in 11 frontier model system cards</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l7)">07</span></td><td>Model artifact supply chain, unsafe deserialization, malicious hub models</td><td>HiddenLayer, Prisma AIRS (ex-Protect AI), JFrog ML</td><td>Protect AI absorbed by Palo Alto Jul 2025; HiddenLayer independent on $56M</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l8)">08</span></td><td>Runtime prompt injection, output filtering, redaction, token flooding</td><td>Prompt Security, Lakera (Check Point), Robust Intelligence (Cisco)</td><td>Two of the three leading independents acquired; this layer is now platform-owned</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l9)">09</span></td><td>Agent permissions, tool-call sandboxing, egress control, human-in-loop gates</td><td>Zenity, Invariant Labs, E2B, Browserbase</td><td>Zenity $125M Series C (Aug 3, 2026); capital still backing independents here</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l10)">10</span></td><td>MCP server trust and authn, gateway policy, spend limits as a control</td><td>Cloudflare AI Gateway, Portkey, Kong</td><td>OX Security disclosed ~200,000 vulnerable MCP instances (Apr 2026); NSA guidance since issued</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l11)">11</span></td><td>DLP for copilots, oversharing via enterprise search, shadow AI</td><td>Microsoft Purview, Netskope, Island, Witness AI</td><td>Oversharing is the most-cited blocker to copilot rollout; a permissions problem, not a model problem</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l12)">12</span></td><td><strong>AI applied to security operations</strong> &mdash; detection, triage, response</td><td>CrowdStrike Charlotte, Microsoft Security Copilot, Dropzone, Prophet, Torq</td><td>Dropzone $57.4M / 100+ enterprise customers; Prophet $41M; all three majors shipped agentic SOC at RSAC 2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="xc-conc">
+      <div class="xc-conc-label">Where value concentrates</div>
+      <p><strong>L04, L09 and L12.</strong> Identity (L04) and agent control (L09) are the two surfaces where enterprises are actively writing cheques and where no incumbent yet owns the category. L12 is a genuine vertical with real revenue. Everything else is either already absorbed into platform vendors (L07, L08) or inherited from general infrastructure security (L02, L03), and should be priced as a feature rather than a market.</p>
+    </div>
+  </div>
+
+
+
+  <div class="spine" id="xc-regulation">
+    <div class="spine-head">
+      <h3>Regulation &amp; Governance</h3>
+      <span class="spine-tag">Spine 02</span>
+    </div>
+    <div class="layer-body">
+      <div class="info-card">
+        <h4>Market Sizing</h4>
+        <div class="stat">Two diverging regimes</div>
+        <p>Not a market so much as a procurement gate and a compliance cost. The adjacent GRC software market is roughly $15B. The material fact for 2026 is <strong>divergence in kind</strong>: the US June 2026 Executive Order is voluntary and access-based, while the EU is prescriptive. Any vendor selling into both now needs dual-regime evidence, and nobody produces it off the shelf.</p>
+      </div>
+      <div class="info-card">
+        <h4>Key Dynamics</h4>
+        <p><strong>The EU timeline just moved, and it moved in the direction that reduces near-term pressure.</strong> On June 16, 2026 the European Parliament deferred most high-risk obligations: Annex III use-based duties slip from August 2026 to December 2027, and Annex I product-regulated duties from August 2027 to August 2028. What did take effect on schedule on August 2, 2026 is Article 50 transparency and AI Office enforcement over general-purpose models. The practical consequence is that near-term obligations are about disclosure and GPAI, not high-risk certification, which pushes the compliance-tooling opportunity in Part 3 further out than the July reading implied.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="xc-table">
+        <thead><tr><th>Layer</th><th>Exposure at this altitude</th><th>What applies</th><th>Signal</th></tr></thead>
+        <tbody>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l1)">01</span></td><td>Export controls, entity lists, fab and tooling restrictions</td><td>Jan 2026 Commerce rule reopened H200 / MI325X to China; late-May 2026 rules re-tightened on Blackwell and closed the offshore-subsidiary loophole</td><td>Chinese vendors took ~41% of China's AI accelerator server market in 2025, up from NVIDIA's ~95% share in 2022 (IDC)</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l2)">02</span></td><td>Siting, permitting, water disclosure, large-load interconnection</td><td>200+ state data-centre bills in 2025, 40+ enacted; DOE proposed federal jurisdiction over loads above 20MW</td><td>Regulatory risk is now local and political, not federal</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l3)">03</span></td><td>Export controls on high-end networking equipment</td><td>Inherited from L01 and L02</td><td>Low direct exposure</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l4)">04</span></td><td>Data residency and sovereignty</td><td>EU residency requirements enforced at the cloud boundary</td><td>The main transmission path for EU obligations into US vendors</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l5)">05</span></td><td>Copyright, lawful basis for training data, residency</td><td>Active litigation across jurisdictions</td><td>Exposure attaches to the corpus, not the weights, so it concentrates here rather than at L06</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l6)">06</span></td><td>GPAI obligations, transparency, pre-release evaluation</td><td><strong>EU Article 50 and GPAI enforcement took effect Aug 2, 2026 as scheduled.</strong> High-risk obligations deferred: Annex III to Dec 2027, Annex I to Aug 2028 (Parliament vote, Jun 16, 2026)</td><td>US June 2026 EO is voluntary and access-based; the two regimes are diverging in kind, not just in degree</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l7)">07</span></td><td>Documentation, record-keeping, third-party assessment</td><td>Lands here first when high-risk rules apply</td><td>Deferred to Dec 2027, which removes near-term urgency</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l8)">08</span></td><td>Content marking, deepfake labelling, output disclosure</td><td>Article 50 enforced at the serving boundary, live now</td><td>The one EU obligation with immediate teeth</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l9)">09</span></td><td>Audit trails, action logging, human oversight</td><td>June 2026 US EO and EU record-keeping both land here</td><td>Turned agent governance evidence into a procurement gate</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l10)">10</span></td><td>Policy enforcement and evidence generation</td><td>Natural enforcement point for both regimes</td><td>The gateway is the only component that sees every call</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l11)">11</span></td><td>Workplace surveillance, accessibility, employment law</td><td>Attaches to the deploying enterprise, not the vendor</td><td>Underrated; rarely appears in vendor risk registers</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l12)">12</span></td><td>Sectoral certification per vertical</td><td>State-by-state insurance, HIPAA, FINRA, FDA</td><td>The moat named in the top-ranked opportunity in Part 3</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="xc-conc">
+      <div class="xc-conc-label">Where value concentrates</div>
+      <p><strong>L01 and L06, with a long tail at L12.</strong> Export controls at silicon are the highest-consequence regulatory force in the stack and the one this report has historically under-covered. L06 carries the live EU obligations. L12 carries sectoral certification, which is a moat rather than a cost. The middle of the stack (L03, L07, L10) is largely regulated by inheritance.</p>
+    </div>
+  </div>
+
+
+
+  <div class="spine" id="xc-energy">
+    <div class="spine-head">
+      <h3>Energy &amp; Physical Constraints</h3>
+      <span class="spine-tag">Spine 03</span>
+    </div>
+    <div class="layer-body">
+      <div class="info-card">
+        <h4>Market Sizing</h4>
+        <div class="stat">~485 &rarr; ~945 TWh</div>
+        <p>Global data-centre electricity consumption was approximately <strong>485 TWh in 2025</strong>, and the IEA base case projects roughly <strong>945 TWh by 2030</strong>, about 3% of global electricity, up from 1.5% in 2024. Accelerated servers grow near 30% annually against 9% for conventional servers and account for close to half the net increase. <em>This corrects the 1,000 TWh-in-2026 figure carried in prior editions, which was a 2024-vintage projection that did not materialise.</em></p>
+      </div>
+      <div class="info-card">
+        <h4>Key Dynamics</h4>
+        <p><strong>The constraint is interconnection, not generation.</strong> There is no shortage of prospective electrons; there is a shortage of approved connections and delivery timelines. ERCOT alone received 198GW of large-load applications in Q1 2026 against a 438GW queue, energization runs 4&ndash;7 years in major hubs, and DOE has moved to assert federal jurisdiction over loads above 20MW specifically to compress that. This is why Amazon can state that $220B of 2026 capex still will not meet demand: capital is not the binding input.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="xc-table">
+        <thead><tr><th>Layer</th><th>Exposure at this altitude</th><th>Evidence</th><th>Signal</th></tr></thead>
+        <tbody>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l1)">01</span></td><td>Wafer and advanced-packaging capacity; perf-per-watt</td><td>CoWoS allocation, HBM supply</td><td>Every efficiency gain here compounds through all 11 layers above</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l2)">02</span></td><td><strong>Grid interconnection, firm generation, water, shells</strong></td><td>ERCOT took 198GW of large-load applications in Q1 2026 against a 438GW queue</td><td>Energization runs 4&ndash;7 years in major hubs, up to a decade elsewhere. ~60% of hyperscaler capex is power and shells</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l3)">03</span></td><td>Optics and switching power draw</td><td>Rising share of rack power as clusters scale</td><td>One of the few remaining cheap efficiency levers</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l4)">04</span></td><td>PUE, siting economics, cooling</td><td>Hyperscaler PUE gains largely exhausted; long tail still has headroom</td><td>Sets the floor under every price above</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l5)">05</span></td><td>Storage and ETL draw</td><td>Small relative to L02</td><td><span class="xc-thin">Not a binding constraint</span></td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l6)">06</span></td><td>Training-run power events</td><td>Largest single events, but inference has overtaken training in aggregate</td><td>Training is the headline; inference is the curve</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l7)">07</span></td><td>Quantization and distillation as demand-side levers</td><td>The only relief that does not require new generation</td><td><span class="xc-thin">Lever, not a constraint</span></td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l8)">08</span></td><td><strong>Steady-state token-serving load</strong></td><td>Now over 55% of AI infrastructure spend</td><td>Inference efficiency, not training efficiency, determines the 2030 power curve</td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l9)">09</span></td><td>Multi-step agent traces multiply L08 draw</td><td>A single agent trace can consume 10&ndash;100&times; the tokens of one completion</td><td><span class="xc-thin">Indirect multiplier</span></td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l10)">10</span></td><td>Routing and caching as efficiency levers</td><td>Semantic caching and cheap-model routing</td><td><span class="xc-thin">Lever, not a constraint</span></td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l11)">11</span></td><td>None material</td><td>&mdash;</td><td><span class="xc-thin">Not a binding constraint</span></td></tr>
+        <tr><td><span class="layer-badge mono xc-badge" style="background:rgba(255,255,255,0.06);color:var(--l12)">12</span></td><td>None material</td><td>&mdash;</td><td><span class="xc-thin">Not a binding constraint</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="xc-conc">
+      <div class="xc-conc-label">Where value concentrates</div>
+      <p><strong>L01 through L04 only.</strong> The thinness of the top eight rows is the finding, not a gap in the research. Physical constraints bind at the bottom of the stack and are close to irrelevant above L04, which is precisely why application-layer companies can scale without capital intensity while infrastructure companies cannot. The one exception worth watching is L08 and L09: inference efficiency and agent-trace multiplication are demand-side levers on L02 power draw, and they are the only levers available on a shorter horizon than grid interconnection.</p>
+    </div>
+  </div>
+
+  </div>
+</section>
+
 <!-- METHODOLOGY -->
 <section class="section" id="methodology">
   <div class="section-label">Appendix — Methodology</div>
@@ -3618,7 +3643,7 @@
       Sacra, Menlo, Dell'Oro, IEA, analyst surveys. Directionally reliable,
       point values soft.<br>
       <span class="conf-tag conf-c">C</span> Market-sizing projection or
-      extrapolation. Useful for order of magnitude only. Every TAM in Part 4 is
+      extrapolation. Useful for order of magnitude only. Every TAM in Part 3 is
       tier C, and the 2032 figure in the AI-security chart is the softest number
       in the document.</p>
     </div>
@@ -3627,7 +3652,7 @@
   <div class="info-card" style="margin-bottom:2rem;">
     <h4>Known defects in this edition</h4>
     <p><strong>Survey-based demand data is self-reported.</strong> The 88%, 39%
-    and 6% figures in Part 3 come from executive surveys, which systematically
+    and 6% figures in Part 2 come from executive surveys, which systematically
     over-report adoption and under-report failure. Read them as upper bounds on
     adoption and lower bounds on disappointment.<br><br>
     <strong>Market sizings use mixed bases.</strong> The layer chart places TAM,
@@ -4383,6 +4408,29 @@ window.STACK_LAYERS = {"1":"Silicon","2":"Compute & DC","3":"Networking","4":"Cl
     if (e.key === 'Escape' && overlay.classList.contains('open')) close();
   });
 })();
+</script>
+<script>
+  (function() {
+    var t = document.getElementById('xcToggle');
+    var b = document.getElementById('xcBody');
+    if (!t || !b) return;
+    t.addEventListener('click', function() {
+      var open = t.getAttribute('aria-expanded') === 'true';
+      t.setAttribute('aria-expanded', open ? 'false' : 'true');
+      b.classList.toggle('open', !open);
+    });
+    // A deep link or in-page jump to a collapsed spine must open it first.
+    function revealIfTargeted() {
+      if (!/^#xc-/.test(location.hash)) return;
+      if (t.getAttribute('aria-expanded') === 'true') return;
+      t.setAttribute('aria-expanded', 'true');
+      b.classList.add('open');
+      var el = document.getElementById(location.hash.slice(1));
+      if (el) el.scrollIntoView();
+    }
+    window.addEventListener('hashchange', revealIfTargeted);
+    revealIfTargeted();
+  })();
 </script>
 </body>
 </html>
