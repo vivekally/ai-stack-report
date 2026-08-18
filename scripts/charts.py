@@ -57,6 +57,12 @@ def hbar(data, unit="", width=760, row_h=30, pad_l=190, pad_r=92, colors=None,
     n = len(data)
     h = n * row_h + 26
     vmax = max(v for _, v, _ in data) or 1
+    # Size the gutters from the actual text. JetBrains Mono at 10px is ~6.05px
+    # per character; the SVG renders with overflow:visible, so a label wider
+    # than its gutter bleeds outside the chart card rather than clipping.
+    CH = 6.05
+    pad_l = max(pad_l, max(len(str(d[0])) for d in data) * CH + 16)
+    pad_r = max(pad_r, max(len(str(d[2])) for d in data) * CH + 14)
     plot_w = width - pad_l - pad_r
     out = [f'<svg viewBox="0 0 {width} {h}" class="cv" role="img" '
            f'preserveAspectRatio="xMidYMid meet">']
