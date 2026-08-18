@@ -1106,13 +1106,6 @@ if _side != _docs:
 else:
     applied.append(f"Order guard (post-move): {len(_side)} sections aligned")
 
-DST.write_text(html)
-r = subprocess.run(["python3", str(_hub)], cwd="/Users/aially/Desktop/Claude Code",
-                   capture_output=True, text=True)
-print("\n".join("  OK   " + a for a in applied))
-if failed:
-    print("\nFAILED:"); print("\n".join("  FAIL " + f for f in failed)); sys.exit(1)
-print(f"\nWrote {DST} ({len(html):,} bytes)")
 
 # ══════════════════════════════════════════════════════════════
 # 12. Accurate provenance: drop "Confidential", add a disclaimer
@@ -1183,10 +1176,33 @@ plain('adds <strong>Part 2 — Cross-Cutting Concerns</strong>',
       'adds <strong>Part 4 — Cross-Cutting Concerns</strong>',
       "footer: Cross-Cutting is Part 4")
 
+
+# ══════════════════════════════════════════════════════════════
+# 13. Drop the audience framing entirely
+# ══════════════════════════════════════════════════════════════
+# "for C-Suite & Investment Committee" reads as a claim about who the report
+# advises, which sits badly beside "not investment advice". Removed from both
+# the hero meta strip and the footer rather than reworded.
+plain('    <div class="hero-meta-item">Written for <span>C-Suite &amp; Investment Committee</span></div>\n',
+      '', "hero: remove audience meta item")
+plain('Written for C-Suite Executive &amp; Investment Committee &nbsp;·&nbsp; Independent research, unaffiliated',
+      'Independent research &nbsp;·&nbsp; Unaffiliated &nbsp;·&nbsp; Compiled from public sources',
+      "footer: remove audience framing")
+
 DST.write_text(html)
 r = subprocess.run(["python3", str(_hub)], cwd="/Users/aially/Desktop/Claude Code",
                    capture_output=True, text=True)
+
+# ── single final report ──
+DST.write_text(html)
+r = subprocess.run(["python3", str(_hub)], cwd="/Users/aially/Desktop/Claude Code",
+                   capture_output=True, text=True)
+if r.returncode == 0:
+    html = DST.read_text()
+else:
+    failed.append("suite bar patch failed")
+
 print("\n".join("  OK   " + a for a in applied))
 if failed:
     print("\nFAILED:"); print("\n".join("  FAIL " + f for f in failed)); sys.exit(1)
-print(f"\nWrote {DST} ({len(html):,} bytes)")
+print(f"\nWrote {DST} ({len(html):,} bytes)  |  {len(applied)} operations")
