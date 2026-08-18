@@ -1595,6 +1595,25 @@
   .xc-body { display: none; margin-top: 2rem; }
   .xc-body.open { display: block; animation: xcFade .22s ease; }
   @keyframes xcFade { from { opacity: 0; } to { opacity: 1; } }
+
+  .disclaimer {
+    border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 10px; padding: 1.25rem 1.45rem; margin-bottom: 2.2rem;
+    font-family: 'Syne', sans-serif; font-size: 12.5px; line-height: 1.78;
+    color: var(--muted); text-transform: none; letter-spacing: normal;
+  }
+  .disclaimer-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: .7rem;
+  }
+  .disclaimer p + p { margin-top: .62rem; }
+  .disclaimer strong { color: var(--text); font-weight: 700; }
+  .disclaimer a {
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid rgba(94,231,196,0.35);
+  }
+  .disclaimer a:hover { border-bottom-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -1657,11 +1676,11 @@
 <!-- HERO -->
 <div class="wrapper">
 <section class="hero">
-  <div class="hero-eyebrow">Confidential Strategy Document · Refreshed August 17, 2026</div>
+  <div class="hero-eyebrow">Independent Research · Refreshed August 17, 2026</div>
   <h1>The <em>AI Technology Stack</em><br>A Definitive Landscape Report</h1>
   <p class="hero-sub">A 12-layer analysis of the AI ecosystem &mdash; silicon to vertical applications &mdash; with competitive landscapes, market sizing, funding metrics, and strategic build opportunities across funding tiers. Refreshed against publicly available information as of August 17, 2026.</p>
   <div class="hero-meta">
-    <div class="hero-meta-item">Prepared for <span>C-Suite &amp; Investment Committee</span></div>
+    <div class="hero-meta-item">Written for <span>C-Suite &amp; Investment Committee</span></div>
     <div class="hero-meta-item">Layers analyzed <span>12</span></div>
     <div class="hero-meta-item">Charts <span>8</span></div>
     <div class="hero-meta-item">Ecosystem value <span>$2T+</span></div>
@@ -3678,10 +3697,30 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>This report reflects data refreshed against publicly available information as of <strong>August 10, 2026</strong>. Sources include Bloomberg, Reuters, CNBC, TechCrunch, SEC filings (NVIDIA, CoreWeave, Cerebras), company press releases and earnings calls, Menlo Ventures, Sacra, Crunchbase, Tracxn, Synergy Research, Dell'Oro, Deloitte, IEA, Gartner, JLL, law-firm regulatory alerts (Skadden, Latham, Wiley), and direct company disclosures. 14 material errors corrected and 10 material events incorporated relative to the original April 11, 2026 edition; 13 further updates (entries 07&ndash;19) in the July 13, 2026 cycle; and <strong>10 updates (entries 20&ndash;29) in this August 10, 2026 cycle</strong>, verified across 18 distinct web searches covering Q2 2026 hyperscaler earnings, IPO process milestones, funding disclosures, model releases, and AI governance actions. Three companies added to the graph this cycle: <strong>Coconut</strong> (Layer 10), <strong>SpotDraft</strong> (Layer 12), and <strong>Qualcomm</strong> (Layer 01). Figures reported as "in market" or "reported" are unclosed rounds and are labelled as such.</p>
-  <p style="margin-top:.5rem;"><strong>August 17, 2026 cycle:</strong> adds <strong>Part 2 — Cross-Cutting Concerns</strong>, three spines (security, regulation, energy) running vertically through all twelve layers, and <strong>value-chain dependency blocks on every layer</strong>, closing the upstream/downstream gap carried since the first edition. Opportunities renumbered to Part 3. Five corrections logged (entries 30&ndash;34), verified across 12 distinct web searches covering AI-security market structure and M&amp;A, AI-SOC funding, non-human identity, MCP vulnerability disclosure, EU AI Act timeline amendments, US export-control changes, data-centre energy and interconnection-queue data, and Cerebras Q2 results. The most material correction is entry 30: data-centre energy consumption was overstated by roughly 2&times; in prior editions.</p>
+  <div class="disclaimer">
+    <div class="disclaimer-label">About this report</div>
+    <p><strong>Independent and unaffiliated.</strong> This report was not commissioned,
+    sponsored, or reviewed by any company named in it, and no business relationship
+    exists with any of them. The analysis and any errors in it are the author's own.</p>
+    <p><strong>Compiled from public sources.</strong> Figures come from publicly
+    available information: regulatory filings, earnings calls, press releases and
+    published research, listed in the Methodology appendix. Revenue and valuation
+    figures for private companies are third-party estimates, are marked by confidence
+    tier, and should be treated as approximate.</p>
+    <p><strong>Not investment advice.</strong> Nothing here is a recommendation to buy,
+    sell or hold any security, or to fund any company. It is written for people doing
+    that work and is not a substitute for their own diligence.</p>
+    <p><strong>Company names and trademarks</strong> are the property of their respective
+    owners and are used here for identification and commentary.</p>
+    <p><strong>Corrections welcome.</strong> If something about your company is wrong here,
+    email <a href="mailto:vivekally@gmail.com">vivekally@gmail.com</a>. Corrections are
+    applied in the next refresh cycle and logged in the Updates banner with the superseded
+    value struck through, so the change is visible rather than silent.</p>
+  </div>
+  <p>This report reflects data refreshed against publicly available information as of <strong>August 17, 2026</strong>. Sources include Bloomberg, Reuters, CNBC, TechCrunch, SEC filings (NVIDIA, CoreWeave, Cerebras), company press releases and earnings calls, Menlo Ventures, Sacra, Crunchbase, Tracxn, Synergy Research, Dell'Oro, Deloitte, IEA, Gartner, JLL, law-firm regulatory alerts (Skadden, Latham, Wiley), and direct company disclosures. 14 material errors corrected and 10 material events incorporated relative to the original April 11, 2026 edition; 13 further updates (entries 07&ndash;19) in the July 13, 2026 cycle; and <strong>10 updates (entries 20&ndash;29) in this August 10, 2026 cycle</strong>, verified across 18 distinct web searches covering Q2 2026 hyperscaler earnings, IPO process milestones, funding disclosures, model releases, and AI governance actions. Three companies added to the graph this cycle: <strong>Coconut</strong> (Layer 10), <strong>SpotDraft</strong> (Layer 12), and <strong>Qualcomm</strong> (Layer 01). Figures reported as "in market" or "reported" are unclosed rounds and are labelled as such.</p>
+  <p style="margin-top:.5rem;"><strong>August 17, 2026 cycle:</strong> adds <strong>Part 4 — Cross-Cutting Concerns</strong>, three spines (security, regulation, energy) running vertically through all twelve layers, and <strong>value-chain dependency blocks on every layer</strong>, closing the upstream/downstream gap carried since the first edition. Opportunities renumbered to Part 3. Five corrections logged (entries 30&ndash;34), verified across 12 distinct web searches covering AI-security market structure and M&amp;A, AI-SOC funding, non-human identity, MCP vulnerability disclosure, EU AI Act timeline amendments, US export-control changes, data-centre energy and interconnection-queue data, and Cerebras Q2 results. The most material correction is entry 30: data-centre energy consumption was overstated by roughly 2&times; in prior editions.</p>
   <p style="margin-top:.5rem;"><strong>Additions in this build:</strong> an eight-chart pack (the document's first data visualisations), <strong>Part 3 &mdash; Adoption &amp; Realized Value</strong> carrying demand-side evidence from Stanford HAI, McKinsey and PwC, a <strong>Methodology appendix</strong> with confidence tiers and a stated list of known defects, inline source links, and <strong>55 companies added to the search index and knowledge graph</strong> including the entirety of Layer 03, which previously had none. Opportunities renumbered to Part 4. Chart colours were validated for colour-vision deficiency against this document's own dark surface; every figure ships a data table.</p>
-  <p style="margin-top:.5rem;">Prepared for C-Suite Executive &amp; Investment Committee &nbsp;·&nbsp; Confidential Strategy Document</p>
+  <p style="margin-top:.5rem;">Written for C-Suite Executive &amp; Investment Committee &nbsp;·&nbsp; Independent research, unaffiliated</p>
 </footer>
 
 </div><!-- /wrapper -->
