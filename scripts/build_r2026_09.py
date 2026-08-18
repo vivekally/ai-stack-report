@@ -1113,3 +1113,80 @@ print("\n".join("  OK   " + a for a in applied))
 if failed:
     print("\nFAILED:"); print("\n".join("  FAIL " + f for f in failed)); sys.exit(1)
 print(f"\nWrote {DST} ({len(html):,} bytes)")
+
+# ══════════════════════════════════════════════════════════════
+# 12. Accurate provenance: drop "Confidential", add a disclaimer
+# ══════════════════════════════════════════════════════════════
+# The document called itself a "Confidential Strategy Document" while sitting
+# on a public URL, and made invest/build recommendations with nothing saying it
+# is not advice. Both are now stated accurately.
+_DISC_CSS = """
+  .disclaimer {
+    border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 10px; padding: 1.25rem 1.45rem; margin-bottom: 2.2rem;
+    font-family: 'Syne', sans-serif; font-size: 12.5px; line-height: 1.78;
+    color: var(--muted); text-transform: none; letter-spacing: normal;
+  }
+  .disclaimer-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: .7rem;
+  }
+  .disclaimer p + p { margin-top: .62rem; }
+  .disclaimer strong { color: var(--text); font-weight: 700; }
+  .disclaimer a {
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid rgba(94,231,196,0.35);
+  }
+  .disclaimer a:hover { border-bottom-color: var(--accent); }
+</style>"""
+sub1(r"</style>", _DISC_CSS, "Disclaimer CSS")
+
+_DISCLAIMER = """  <div class="disclaimer">
+    <div class="disclaimer-label">About this report</div>
+    <p><strong>Independent and unaffiliated.</strong> This report was not commissioned,
+    sponsored, or reviewed by any company named in it, and no business relationship
+    exists with any of them. The analysis and any errors in it are the author's own.</p>
+    <p><strong>Compiled from public sources.</strong> Figures come from publicly
+    available information: regulatory filings, earnings calls, press releases and
+    published research, listed in the Methodology appendix. Revenue and valuation
+    figures for private companies are third-party estimates, are marked by confidence
+    tier, and should be treated as approximate.</p>
+    <p><strong>Not investment advice.</strong> Nothing here is a recommendation to buy,
+    sell or hold any security, or to fund any company. It is written for people doing
+    that work and is not a substitute for their own diligence.</p>
+    <p><strong>Company names and trademarks</strong> are the property of their respective
+    owners and are used here for identification and commentary.</p>
+    <p><strong>Corrections welcome.</strong> If something about your company is wrong here,
+    email <a href="mailto:vivekally@gmail.com">vivekally@gmail.com</a>. Corrections are
+    applied in the next refresh cycle and logged in the Updates banner with the superseded
+    value struck through, so the change is visible rather than silent.</p>
+  </div>
+"""
+plain("<footer>\n", "<footer>\n" + _DISCLAIMER, "Disclaimer block in footer")
+
+# "Confidential" was untrue on a public site; "Prepared for" implied a commission
+plain('Confidential Strategy Document · Refreshed August 17, 2026',
+      'Independent Research · Refreshed August 17, 2026', "hero: drop Confidential")
+plain('<div class="hero-meta-item">Prepared for <span>C-Suite &amp; Investment Committee</span></div>',
+      '<div class="hero-meta-item">Written for <span>C-Suite &amp; Investment Committee</span></div>',
+      "hero meta: Written for")
+plain('Prepared for C-Suite Executive &amp; Investment Committee &nbsp;·&nbsp; Confidential Strategy Document',
+      'Written for C-Suite Executive &amp; Investment Committee &nbsp;·&nbsp; Independent research, unaffiliated',
+      "footer: drop Confidential")
+
+# two stale references in the footer prose
+plain('publicly available information as of <strong>August 10, 2026</strong>',
+      'publicly available information as of <strong>August 17, 2026</strong>',
+      "footer: refresh date")
+plain('adds <strong>Part 2 — Cross-Cutting Concerns</strong>',
+      'adds <strong>Part 4 — Cross-Cutting Concerns</strong>',
+      "footer: Cross-Cutting is Part 4")
+
+DST.write_text(html)
+r = subprocess.run(["python3", str(_hub)], cwd="/Users/aially/Desktop/Claude Code",
+                   capture_output=True, text=True)
+print("\n".join("  OK   " + a for a in applied))
+if failed:
+    print("\nFAILED:"); print("\n".join("  FAIL " + f for f in failed)); sys.exit(1)
+print(f"\nWrote {DST} ({len(html):,} bytes)")
