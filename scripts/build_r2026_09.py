@@ -990,6 +990,125 @@ r = subprocess.run(["python3", str(_hub)], cwd="/Users/aially/Desktop/Claude Cod
 if r.returncode == 0:
     applied.append("Suite bar re-applied after nav fix")
 
+# ══════════════════════════════════════════════════════════════
+# 11. Cross-Cutting: move to last (before Methodology), collapsed by default
+# ══════════════════════════════════════════════════════════════
+_XC_CSS = """
+  .xc-toggle {
+    margin: 0.4rem 0 0; display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 7px 14px; background: transparent;
+    border: 1px solid rgba(94,231,196,0.3); border-radius: 3px;
+    color: var(--accent); font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .xc-toggle:hover { background: rgba(94,231,196,0.08); border-color: var(--accent); }
+  .xc-toggle .icon { display:inline-block; transition: transform 0.2s ease; }
+  .xc-toggle[aria-expanded="true"] .icon { transform: rotate(90deg); }
+  .xc-toggle .label-expanded { display: none; }
+  .xc-toggle[aria-expanded="true"] .label-collapsed { display: none; }
+  .xc-toggle[aria-expanded="true"] .label-expanded { display: inline; }
+  .xc-body { display: none; margin-top: 2rem; }
+  .xc-body.open { display: block; animation: xcFade .22s ease; }
+  @keyframes xcFade { from { opacity: 0; } to { opacity: 1; } }
+</style>"""
+sub1(r"</style>", _XC_CSS, "Cross-cutting collapse CSS")
+
+# --- lift the section out whole ---
+_s = html.index('<!-- ══════════════════════════════════════════\n     PART 2 — CROSS-CUTTING CONCERNS')
+_e = html.index('</section>', html.index('<section class="section" id="crosscutting">')) + len('</section>\n')
+_xc = html[_s:_e]
+html = html[:_s] + html[_e:]
+
+# --- wrap the three spines in a collapsible body + add the toggle ---
+_cut = _xc.index('<div class="spine" id="xc-security"')
+_head, _spines = _xc[:_cut], _xc[_cut:]
+_spines = _spines.replace('</section>\n', '')
+_xc = (_head
+  + '<button class="xc-toggle" id="xcToggle" aria-expanded="false" aria-controls="xcBody">\n'
+    '    <span class="icon">&#9656;</span>\n'
+    '    <span class="label-collapsed">Show the three spines</span>\n'
+    '    <span class="label-expanded">Hide the three spines</span>\n'
+    '  </button>\n'
+    '  <div class="xc-body" id="xcBody">\n'
+  + _spines
+  + '  </div>\n</section>\n')
+
+# --- reinsert immediately before the Methodology appendix ---
+_m = html.index('<!-- METHODOLOGY -->')
+html = html[:_m] + _xc + '\n' + html[_m:]
+applied.append("Cross-Cutting moved before Methodology, wrapped collapsed")
+
+# --- renumber the parts, via placeholders so the swaps cannot collide ---
+_num = [('Part 2 — Cross-Cutting Concerns',        '@@P4@@ — Cross-Cutting Concerns'),
+        ('Part 3 — Adoption &amp; Realized Value', '@@P2@@ — Adoption &amp; Realized Value'),
+        ('Part 4 — Strategic Gaps &amp; Opportunities', '@@P3@@ — Strategic Gaps &amp; Opportunities')]
+for a, b in _num:
+    plain(a, b, f"renumber: {a[:34]}")
+
+# cross-references: Opportunities 4->3, Cross-Cutting 2->4, Adoption 3->2
+html = html.replace('in Part 4', 'in @@P3@@')          # all point at Opportunities
+html = html.replace('in Part 2', 'in @@P4@@')          # both point at Cross-Cutting
+html = html.replace('figures in Part 3', 'figures in @@P2@@')
+applied.append("cross-references retargeted")
+
+# two sentences whose logic (not just numbering) assumed the old order
+plain('This materially qualifies the supply-side valuations throughout Parts 1 and 2.',
+      'This materially qualifies the supply-side valuations throughout the report.',
+      "banner 35: drop stale part reference")
+plain('Parts 1 and 2 are supply-side: who builds what, and which\n  forces cut across them. Neither answers',
+      'Part 1 is supply-side: who builds what, layer by layer. It does not answer',
+      "adoption intro: no longer assumes Cross-Cutting precedes it")
+
+for ph, real in [('@@P2@@','Part 2'), ('@@P3@@','Part 3'), ('@@P4@@','Part 4')]:
+    html = html.replace(ph, real)
+
+# --- sidebar: Cross-Cutting sits before Methodology ---
+plain('<a href="#crosscutting" data-target="crosscutting">Cross-Cutting</a>\n', "",
+      "sidebar: drop old Cross-Cutting position")
+plain('<a href="#methodology" data-target="methodology">Methodology</a>',
+      '<a href="#crosscutting" data-target="crosscutting">Cross-Cutting</a>\n'
+      '<a href="#methodology" data-target="methodology">Methodology</a>',
+      "sidebar: Cross-Cutting before Methodology")
+
+# --- toggle wiring ---
+plain('</body>',
+"""<script>
+  (function() {
+    var t = document.getElementById('xcToggle');
+    var b = document.getElementById('xcBody');
+    if (!t || !b) return;
+    t.addEventListener('click', function() {
+      var open = t.getAttribute('aria-expanded') === 'true';
+      t.setAttribute('aria-expanded', open ? 'false' : 'true');
+      b.classList.toggle('open', !open);
+    });
+    // A deep link or in-page jump to a collapsed spine must open it first.
+    function revealIfTargeted() {
+      if (!/^#xc-/.test(location.hash)) return;
+      if (t.getAttribute('aria-expanded') === 'true') return;
+      t.setAttribute('aria-expanded', 'true');
+      b.classList.add('open');
+      var el = document.getElementById(location.hash.slice(1));
+      if (el) el.scrollIntoView();
+    }
+    window.addEventListener('hashchange', revealIfTargeted);
+    revealIfTargeted();
+  })();
+</script>
+</body>""", "toggle JS")
+
+# order guard re-run after the move
+_side = re.findall(r'data-target="([a-z0-9]+)"', html)
+_docs = [d for d in re.findall(r'<section class="[a-z\- ]*" id="([a-z0-9]+)"', html) if d in set(_side)]
+if _side != _docs:
+    failed.append(f"order mismatch after move\n         sidebar: {_side}\n         document:{_docs}")
+else:
+    applied.append(f"Order guard (post-move): {len(_side)} sections aligned")
+
+DST.write_text(html)
+r = subprocess.run(["python3", str(_hub)], cwd="/Users/aially/Desktop/Claude Code",
+                   capture_output=True, text=True)
 print("\n".join("  OK   " + a for a in applied))
 if failed:
     print("\nFAILED:"); print("\n".join("  FAIL " + f for f in failed)); sys.exit(1)
